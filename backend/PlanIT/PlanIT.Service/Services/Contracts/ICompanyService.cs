@@ -9,9 +9,9 @@ namespace PlanIT.Service.Services.Contracts
 
         CompanyBO GetCompanyByName(string companyName);
 
-        CompanyBO CreateCompany(CompanyBO company);
+        void CreateCompany(CompanyBO companyBO);
 
-        CompanyBO UpdateCompany(CompanyBO company);
+        void UpdateCompany(CompanyBO companyBO);
 
         void DeleteCompanyByName(string companyName);
     }

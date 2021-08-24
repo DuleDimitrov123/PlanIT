@@ -32,22 +32,33 @@ namespace PlanIT.Service
 
         public CompanyBO GetCompanyByName(string companyName)
         {
-            throw new NotImplementedException();
+            Company company = _companyRepository.GetCompanyByName(companyName);
+
+            CompanyBO companyBO = null;
+            if (company != null)
+            {
+                companyBO = CompanyServiceHelpers.MakeCompanyBOFromCompany(company);
+            }
+
+            return companyBO;
         }
 
-        public CompanyBO CreateCompany(CompanyBO company)
+        public void CreateCompany(CompanyBO companyBO)
         {
-            throw new NotImplementedException();
+            _companyRepository.CreateCompany(
+                CompanyServiceHelpers.MakeCompanyFromCompanyBO(companyBO));
         }
 
-        public CompanyBO UpdateCompany(CompanyBO company)
+        public void UpdateCompany(CompanyBO companyBO)
         {
-            throw new NotImplementedException();
+            _companyRepository.UpdateCompany(
+                CompanyServiceHelpers.MakeCompanyFromCompanyBO(companyBO));
         }
 
         public void DeleteCompanyByName(string companyName)
         {
-            throw new NotImplementedException();
+            _companyRepository.DeleteCompanyByName(companyName);
+            //TODO:Delete in all conected tables
         }
     }
 }

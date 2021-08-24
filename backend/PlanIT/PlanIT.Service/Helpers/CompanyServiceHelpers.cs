@@ -23,11 +23,11 @@ namespace PlanIT.Service.Helpers
         {
             CompanyBO companyBO = new CompanyBO()
             {
-                CompanyName = company.CompanyName,
-                Country = company.Country,
-                City = company.City,
-                Address = company.Address,
-                Description = company.Description
+                CompanyName = company?.CompanyName,
+                Country = company?.Country,
+                City = company?.City,
+                Address = company?.Address,
+                Description = company?.Description
             };
 
             return companyBO;

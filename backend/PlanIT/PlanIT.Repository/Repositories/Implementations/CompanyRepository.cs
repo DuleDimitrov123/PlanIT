@@ -1,10 +1,14 @@
 ﻿using Cassandra;
+using Cassandra.Mapping;
+using Cassandra.Data.Linq;
 using PlanIT.DataAccess;
 using PlanIT.DataAccess.Constants;
 using PlanIT.DataAccess.Helpers;
 using PlanIT.Repository.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using PlanIT.Repository.Mappings;
 
 namespace PlanIT.Repository
 {
@@ -16,10 +20,10 @@ namespace PlanIT.Repository
 
             if (session == null)
             {
-                throw new Exception("Database isn't available at the moment, please try again later");
+                throw new Exception("Database isn't available at the moment, please try again later.");
             }
 
-            var companyRowSet = session.Execute($"SELECT * FROM {DatabaseNames.Company}");
+            var companyRowSet = session.Execute($"SELECT * FROM \"{DatabaseNames.Company}\"");
             IList<Company> companies = CompanyHelper.CreateCompanyFromRowSet(companyRowSet);
 
             return companies;
@@ -27,22 +31,58 @@ namespace PlanIT.Repository
 
         public Company GetCompanyByName(string companyName)
         {
-            throw new NotImplementedException();
+            ISession session = SessionManager.GetSession();
+
+            if (session == null)
+            {
+                throw new Exception("Database isn't available at the moment, please try again later.");
+            }
+
+            IMapper mapper = new Mapper(session);
+            Company company = mapper.
+                Fetch<Company>($"SELECT * FROM \"{DatabaseNames.Company}\" where \"{CompanyColumns.CompanyName}\" = ?", companyName)
+                .FirstOrDefault();
+
+            return company;
         }
 
-        public Company CreateCompany(Company company)
+        public void CreateCompany(Company company)
         {
-            throw new NotImplementedException();
+            ISession session = SessionManager.GetSession();
+
+            if (session == null)
+            {
+                throw new Exception("Database isn't available at the moment, please try again later.");
+            }
+
+            IMapper mapper = new Mapper(session);
+            mapper.Insert(company);
         }
 
-        public Company UpdateCompany(Company company)
+        public void UpdateCompany(Company company)
         {
-            throw new NotImplementedException();
+            ISession session = SessionManager.GetSession();
+
+            if (session == null)
+            {
+                throw new Exception("Database isn't available at the moment, please try again later.");
+            }
+
+            IMapper mapper = new Mapper(session);
+            mapper.Update<Company>(company);
         }
 
         public void DeleteCompanyByName(string companyName)
         {
-            throw new NotImplementedException();
+            ISession session = SessionManager.GetSession();
+
+            if (session == null)
+            {
+                throw new Exception("Database isn't available at the moment, please try again later.");
+            }
+
+            IMapper mapper = new Mapper(session);
+            mapper.DeleteIf<Company>($"WHERE \"{CompanyColumns.CompanyName}\" = ?", companyName);
         }
     }
 }

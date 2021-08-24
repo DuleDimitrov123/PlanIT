@@ -9,9 +9,9 @@ namespace PlanIT.Repository.Repositories.Contracts
 
         Company GetCompanyByName(string companyName);
 
-        Company CreateCompany(Company company);
+        void CreateCompany(Company company);
 
-        Company UpdateCompany(Company company);
+        void UpdateCompany(Company company);
 
         void DeleteCompanyByName(string companyName);
     }
