@@ -1,16 +1,16 @@
 ﻿using Cassandra;
 using Cassandra.Mapping;
 using Cassandra.Data.Linq;
-using PlanIT.DataAccess;
 using PlanIT.DataAccess.Constants;
 using PlanIT.DataAccess.Helpers;
 using PlanIT.Repository.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlanIT.Repository.Mappings;
+using PlanIT.DataAccess.Models;
+using PlanIT.Repository.Constants;
 
-namespace PlanIT.Repository
+namespace PlanIT.Repository.Repositories.Implementations
 {
     public class CompanyRepository : ICompanyRepository
     {

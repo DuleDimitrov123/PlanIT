@@ -1,4 +1,4 @@
-﻿namespace PlanIT.DataAccess.Constants
+﻿namespace PlanIT.Repository.Constants
 {
     public static class CompanyColumns
     {

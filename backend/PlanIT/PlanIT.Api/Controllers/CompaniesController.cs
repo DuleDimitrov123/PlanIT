@@ -2,6 +2,7 @@
 using PlanIT.Service.BusinessObjects;
 using PlanIT.Service.Services.Contracts;
 using System;
+using System.Collections.Generic;
 
 namespace PlanIT.Api.Controllers
 {
@@ -18,11 +19,18 @@ namespace PlanIT.Api.Controllers
 
         [HttpGet]
         [Route("companies")]
-        public ActionResult<CompanyBO> GetCompanies()
+        public ActionResult<IList<CompanyBO>> GetCompanies()
         {
-            var companies = _companyService.GetCompanies();
+            try
+            {
+                var companies = _companyService.GetCompanies();
 
-            return Ok(companies);
+                return Ok(companies);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
         }
 
         [HttpGet]
@@ -48,6 +56,7 @@ namespace PlanIT.Api.Controllers
             try
             {
                 _companyService.CreateCompany(companyBO);
+
                 return Ok();
             }
             catch (Exception ex)
@@ -63,6 +72,7 @@ namespace PlanIT.Api.Controllers
             try
             {
                 _companyService.UpdateCompany(companyBO);
+
                 return Ok();
             }
             catch (Exception ex)
@@ -78,6 +88,7 @@ namespace PlanIT.Api.Controllers
             try
             {
                 _companyService.DeleteCompanyByName(companyName);
+
                 return Ok();
             }
             catch (Exception ex)

@@ -1,5 +1,6 @@
 ﻿using Cassandra;
-using PlanIT.DataAccess.Constants;
+using PlanIT.DataAccess.Models;
+using PlanIT.Repository.Constants;
 using System.Collections.Generic;
 
 namespace PlanIT.DataAccess.Helpers
