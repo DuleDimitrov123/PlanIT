@@ -9,8 +9,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using PlanIT.Repository;
 using PlanIT.Repository.Repositories.Contracts;
+using PlanIT.Repository.Repositories.Implementations;
 using PlanIT.Service;
 using PlanIT.Service.Services.Contracts;
+using PlanIT.Service.Services.Implementations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +34,9 @@ namespace PlanIT.Api
         {
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<ICompanyService, CompanyService>();
+
+            services.AddScoped<IStaffRepository, StaffRepository>();
+            services.AddScoped<IStaffService, StaffService>();
             //services.AddTransient<ICompanyService, CompanyService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
