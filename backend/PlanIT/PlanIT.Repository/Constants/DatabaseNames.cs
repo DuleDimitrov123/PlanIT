@@ -9,5 +9,7 @@
         public static string Staff = "Staff";
 
         public static string StaffCanCreateByCompany = "StaffCanCreateByCompany";
+
+        public static string StaffByCompany = "StaffByCompany";
     }
 }

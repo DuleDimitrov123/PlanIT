@@ -14,7 +14,7 @@ namespace PlanIT.Service.Services.Contracts
 
         void CreateStaff(StaffBO staffBO);
 
-        void UpdateStaff(string username, string firstName, string lastName, DateTime dateOfBirth, string companyName, string position);
+        void UpdateStaff(string username, string firstName, string lastName, DateTime dateOfBirth, string position);
 
         void DeleteStaffByUsername(string username);
 
@@ -23,5 +23,13 @@ namespace PlanIT.Service.Services.Contracts
         IList<string> GetCanCreateUsernamesByCompany(string companyName);
 
         void AddRemoveCanCreateUsernamesToCompany(string staffUsername, string companyName, bool add);
+
+        IList<StaffByCompany> GetStaffByCompany(string companyName);
+
+        void AddStaffByCompany(string companyName, string staffUsername, string position);
+
+        void RemoveStaffByCompany(string companyName, string staffUsername, string position);
+
+        void ChangeStaffPosition(string companyName, string staffUsername, string newPosition);
     }
 }

@@ -7,8 +7,10 @@ namespace PlanIT.Api.Models
 {
     public class StaffModels
     {
-        public record UpdateStaffRequest(string FirstName, string LastName, DateTime DateOfBirth, string CompanyName, string Position);
+        public record UpdateStaffRequest(string FirstName, string LastName, DateTime DateOfBirth, string Position);
 
         public record AddRemoveCanCreateUsernamesToCompanyRequest(string StaffUsername);
+
+        public record StaffByCompanyRequestResponse(string StaffUsername, string Position);
     }
 }

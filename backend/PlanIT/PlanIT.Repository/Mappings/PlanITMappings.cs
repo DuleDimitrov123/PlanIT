@@ -38,6 +38,14 @@ namespace PlanIT.Repository.Mappings
                 .PartitionKey(s => s.CompanyName)
                 .Column(s => s.CompanyName, cm => cm.WithName(StaffCanCreateByCompanyColumns.CompanyName).WithDbType<string>()).CaseSensitive()
                 .Column(s => s.StaffUsernames, cm => cm.WithName(StaffCanCreateByCompanyColumns.StaffUsernames).WithDbType<List<string>>()).CaseSensitive();
+
+            For<StaffByCompany>()
+                .TableName(DatabaseNames.StaffByCompany).CaseSensitive()
+                .PartitionKey(s => s.CompanyName)
+                .ClusteringKey(s => s.StaffUsername)
+                .Column(s => s.CompanyName, cm => cm.WithName(StaffByCompanyColumns.CompanyName).WithDbType<string>()).CaseSensitive()
+                .Column(s => s.StaffUsername, cm => cm.WithName(StaffByCompanyColumns.StaffUsername).WithDbType<string>()).CaseSensitive()
+                .Column(s => s.Position, cm => cm.WithName(StaffByCompanyColumns.Position).WithDbType<string>()).CaseSensitive();
         }
     }
 }

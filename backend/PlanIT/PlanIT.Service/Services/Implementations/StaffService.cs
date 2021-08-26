@@ -12,11 +12,15 @@ namespace PlanIT.Service.Services.Implementations
     {
         private readonly IStaffRepository _staffRepository;
         private readonly IStaffCanCreateByCompanyRepository _staffCanCreateByCompanyRepository;
+        private readonly IStaffByCompanyRepository _staffByCompanyRepository;
 
-        public StaffService(IStaffRepository staffRepository, IStaffCanCreateByCompanyRepository staffCanCreateByCompanyRepository)
+        public StaffService(IStaffRepository staffRepository,
+            IStaffCanCreateByCompanyRepository staffCanCreateByCompanyRepository,
+            IStaffByCompanyRepository staffByCompanyRepository)
         {
             _staffRepository = staffRepository;
             _staffCanCreateByCompanyRepository = staffCanCreateByCompanyRepository;
+            _staffByCompanyRepository = staffByCompanyRepository;
         }
 
         public IList<StaffBO> GetStaff()
@@ -49,16 +53,21 @@ namespace PlanIT.Service.Services.Implementations
             _staffRepository.CreateStaff(
                 StaffServiceHelpers.MakeStaffFromStaffBO(staffBO));
 
-            if (staffBO.CanCreate == true)
+            if (staffBO.CanCreate == true && !string.IsNullOrEmpty(staffBO.CompanyName))
             {
                 AddRemoveCanCreateUsernamesToCompany(staffBO.Username, staffBO.CompanyName, true);
             }
+
+            if (!string.IsNullOrEmpty(staffBO.Position) && !string.IsNullOrEmpty(staffBO.CompanyName))
+            {
+                AddStaffByCompany(staffBO.CompanyName, staffBO.Username, staffBO.Position);
+            }
         }
 
-        public void UpdateStaff(string username, string firstName, string lastName, DateTime dateOfBirth, string companyName, string position)
+        public void UpdateStaff(string username, string firstName, string lastName, DateTime dateOfBirth, string position)
         {
             StaffBO staffBO = GetStaffByUsername(username);
-            if(!string.IsNullOrEmpty(firstName))
+            if (!string.IsNullOrEmpty(firstName))
             {
                 staffBO.FirstName = firstName;
             }
@@ -68,19 +77,15 @@ namespace PlanIT.Service.Services.Implementations
                 staffBO.LastName = lastName;
             }
 
-            if(!dateOfBirth.Equals(DateTime.MinValue))
+            if (!dateOfBirth.Equals(DateTime.MinValue))
             {
                 staffBO.DateOfBirth = new Cassandra.LocalDate(dateOfBirth.Year, dateOfBirth.Month, dateOfBirth.Day);
-            }
-
-            if (!string.IsNullOrEmpty(companyName))
-            {
-                staffBO.CompanyName = companyName;
             }
 
             if (!string.IsNullOrEmpty(position))
             {
                 staffBO.Position = position;
+                ChangeStaffPosition(staffBO.CompanyName, staffBO.Username, position);
             }
 
             _staffRepository.UpdateStaff(
@@ -94,6 +99,11 @@ namespace PlanIT.Service.Services.Implementations
             if (staff != null && staff.CanCreate == true)
             {
                 AddRemoveCanCreateUsernamesToCompany(username, staff.CompanyName, false);
+            }
+
+            if (staff != null && !string.IsNullOrEmpty(staff.CompanyName) && !string.IsNullOrEmpty(staff.Position))
+            {
+                RemoveStaffByCompany(staff.CompanyName, staff.Username, staff.Position);
             }
 
             _staffRepository.DeleteStaffByUsername(username);
@@ -121,6 +131,38 @@ namespace PlanIT.Service.Services.Implementations
         public IList<StaffCanCreateByCompany> GetStaffCanCreateByCompany()
         {
             return _staffCanCreateByCompanyRepository.GetStaffCanCreateByCompany();
+        }
+
+        public IList<StaffByCompany> GetStaffByCompany(string companyName)
+        {
+            return _staffByCompanyRepository.GetStaffByCompany(companyName);
+        }
+
+        public void AddStaffByCompany(string companyName, string staffUsername, string position)
+        {
+            _staffByCompanyRepository.AddStaffByCompany(
+                new StaffByCompany
+                {
+                    CompanyName = companyName,
+                    StaffUsername = staffUsername,
+                    Position = position
+                });
+        }
+
+        public void RemoveStaffByCompany(string companyName, string staffUsername, string position)
+        {
+            _staffByCompanyRepository.RemoveStaffByCompany(
+                new StaffByCompany
+                {
+                    CompanyName = companyName,
+                    StaffUsername = staffUsername,
+                    Position = position
+                });
+        }
+
+        public void ChangeStaffPosition(string companyName, string staffUsername, string newPosition)
+        {
+            _staffByCompanyRepository.ChangeStaffPosition(companyName, staffUsername, newPosition);
         }
     }
 }

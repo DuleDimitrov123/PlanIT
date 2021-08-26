@@ -38,6 +38,7 @@ namespace PlanIT.Api
             services.AddScoped<IStaffRepository, StaffRepository>();
             services.AddScoped<IStaffService, StaffService>();
             services.AddScoped<IStaffCanCreateByCompanyRepository, StaffCanCreateByCompanyRepository>();
+            services.AddScoped<IStaffByCompanyRepository, StaffByCompanyRepository>();
             //services.AddTransient<ICompanyService, CompanyService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>

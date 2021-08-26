@@ -80,7 +80,6 @@ namespace PlanIT.Api.Controllers
                     request.FirstName,
                     request.LastName,
                     request.DateOfBirth,
-                    request.CompanyName,
                     request.Position);
 
                 return Ok();
@@ -164,6 +163,85 @@ namespace PlanIT.Api.Controllers
             try
             {
                 _staffService.AddRemoveCanCreateUsernamesToCompany(request.StaffUsername, companyName, false);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpGet]
+        [Route("staff/actions/staff-by-company/{companyName}")]
+        public ActionResult<List<StaffByCompanyRequestResponse>> GetStaffByCompany([FromRoute(Name = "companyName")] string companyName)
+        {
+            try
+            {
+                var staff = _staffService.GetStaffByCompany(companyName);
+
+                var response = new List<StaffByCompanyRequestResponse>();
+                foreach (var s in staff)
+                {
+                    response.Add(new StaffByCompanyRequestResponse(s.StaffUsername, s.Position));
+                }
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpPost]
+        [Route("staff/actions/add-staff-by-company/{companyName}")]
+        public ActionResult AddStaffByCompany([FromRoute(Name = "companyName")] string companyName, [FromBody] StaffByCompanyRequestResponse request)
+        {
+            try
+            {
+                _staffService.AddStaffByCompany(
+                    companyName,
+                    request.StaffUsername,
+                    request.Position);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpPost]
+        [Route("staff/actions/remove-staff-by-company/{companyName}")]
+        public ActionResult RemoveStaffByCompany([FromRoute(Name = "companyName")] string companyName, [FromBody] StaffByCompanyRequestResponse request)
+        {
+            try
+            {
+                _staffService.RemoveStaffByCompany(
+                    companyName,
+                    request.StaffUsername,
+                    request.Position);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpPost]
+        [Route("staff/actions/change-staff-position/{companyName}")]
+        public ActionResult ChangeStaffPosition([FromRoute(Name = "companyName")] string companyName, [FromBody] StaffByCompanyRequestResponse request)
+        {
+            try
+            {
+                _staffService.ChangeStaffPosition(
+                    companyName,
+                    request.StaffUsername,
+                    request.Position);
 
                 return Ok();
             }
