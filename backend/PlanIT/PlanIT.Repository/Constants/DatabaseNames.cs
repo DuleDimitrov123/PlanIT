@@ -7,5 +7,7 @@
         public static string Company = "Company";
 
         public static string Staff = "Staff";
+
+        public static string StaffCanCreateByCompany = "StaffCanCreateByCompany";
     }
 }

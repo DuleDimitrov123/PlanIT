@@ -1,4 +1,5 @@
-﻿using PlanIT.Service.BusinessObjects;
+﻿using PlanIT.DataAccess.Models;
+using PlanIT.Service.BusinessObjects;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,8 +14,14 @@ namespace PlanIT.Service.Services.Contracts
 
         void CreateStaff(StaffBO staffBO);
 
-        void UpdateStaff(StaffBO staffBO);
+        void UpdateStaff(string username, string firstName, string lastName, DateTime dateOfBirth, string companyName, string position);
 
         void DeleteStaffByUsername(string username);
+
+        IList<StaffCanCreateByCompany> GetStaffCanCreateByCompany();
+
+        IList<string> GetCanCreateUsernamesByCompany(string companyName);
+
+        void AddRemoveCanCreateUsernamesToCompany(string staffUsername, string companyName, bool add);
     }
 }

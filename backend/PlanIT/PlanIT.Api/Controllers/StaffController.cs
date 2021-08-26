@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static PlanIT.Api.Models.StaffModels;
 
 namespace PlanIT.Api.Controllers
 {
@@ -30,7 +31,7 @@ namespace PlanIT.Api.Controllers
 
                 return Ok(staff);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.ToString());
             }
@@ -38,7 +39,7 @@ namespace PlanIT.Api.Controllers
 
         [HttpGet]
         [Route("staff/{username}")]
-        public ActionResult<StaffBO> GetStaffByUsername([FromRoute(Name ="username")] string username)
+        public ActionResult<StaffBO> GetStaffByUsername([FromRoute(Name = "username")] string username)
         {
             try
             {
@@ -69,16 +70,22 @@ namespace PlanIT.Api.Controllers
         }
 
         [HttpPut]
-        [Route("staff")]
-        public ActionResult UpdateStaff([FromBody] StaffBO staffBO)
+        [Route("staff/{username}")]
+        public ActionResult UpdateStaff([FromRoute(Name = "username")] string username, [FromBody] UpdateStaffRequest request)
         {
             try
             {
-                _staffService.UpdateStaff(staffBO);
+                _staffService.UpdateStaff(
+                    username,
+                    request.FirstName,
+                    request.LastName,
+                    request.DateOfBirth,
+                    request.CompanyName,
+                    request.Position);
 
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.ToString());
             }
@@ -91,6 +98,72 @@ namespace PlanIT.Api.Controllers
             try
             {
                 _staffService.DeleteStaffByUsername(username);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpGet]
+        [Route("staff/actions/staff-can-create-by-company")]
+        public ActionResult GetStaffCanCreateByCompany()
+        {
+            try
+            {
+                var staffCanCreateByService = _staffService.GetStaffCanCreateByCompany();
+
+                return Ok(staffCanCreateByService);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpGet]
+        [Route("staff/actions/can-create-usernames-by-company/{companyName}")]
+        public ActionResult<IList<string>> GetCanCreateUsernamesByCompany([FromRoute(Name = "companyName")] string companyName)
+        {
+            try
+            {
+                var staffsCanCreate = _staffService.GetCanCreateUsernamesByCompany(companyName);
+
+                return Ok(staffsCanCreate);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpPost]
+        [Route("staff/actions/add-can-create-usernames-by-company/{companyName}")]
+        public ActionResult AddCanCreateUsernamesToCompany([FromRoute(Name = "companyName")] string companyName,
+            [FromBody] AddRemoveCanCreateUsernamesToCompanyRequest request)
+        {
+            try
+            {
+                _staffService.AddRemoveCanCreateUsernamesToCompany(request.StaffUsername, companyName, true);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpPost]
+        [Route("staff/actions/remove-can-create-usernames-by-company/{companyName}")]
+        public ActionResult RemoveCanCreateUsernamesToCompany([FromRoute(Name = "companyName")] string companyName,
+            [FromBody] AddRemoveCanCreateUsernamesToCompanyRequest request)
+        {
+            try
+            {
+                _staffService.AddRemoveCanCreateUsernamesToCompany(request.StaffUsername, companyName, false);
 
                 return Ok();
             }

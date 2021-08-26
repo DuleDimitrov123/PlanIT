@@ -36,7 +36,7 @@ namespace PlanIT.Repository.Repositories.Implementations
             }
 
             IMapper mapper = new Mapper(session);
-            var staff = mapper.First<Staff>($"WHERE \"{StaffColumns.Username}\" = ?", username);
+            var staff = mapper.Fetch<Staff>($"WHERE \"{StaffColumns.Username}\" = ?", username).FirstOrDefault();
 
             return staff;
         }

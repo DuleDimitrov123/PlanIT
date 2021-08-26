@@ -4,6 +4,7 @@ using PlanIT.DataAccess.Constants;
 using PlanIT.DataAccess.Models;
 using PlanIT.Repository.Constants;
 using System;
+using System.Collections.Generic;
 
 namespace PlanIT.Repository.Mappings
 {
@@ -31,6 +32,12 @@ namespace PlanIT.Repository.Mappings
                 .Column(s => s.CompanyName, cm => cm.WithName(StaffColumns.CompanyName).WithDbType<string>()).CaseSensitive()
                 .Column(s => s.Position, cm => cm.WithName(StaffColumns.Position).WithDbType<string>()).CaseSensitive()
                 .Column(s => s.CanCreate, cm => cm.WithName(StaffColumns.CanCreate).WithDbType<bool>()).CaseSensitive();
+
+            For<StaffCanCreateByCompany>()
+                .TableName(DatabaseNames.StaffCanCreateByCompany).CaseSensitive()
+                .PartitionKey(s => s.CompanyName)
+                .Column(s => s.CompanyName, cm => cm.WithName(StaffCanCreateByCompanyColumns.CompanyName).WithDbType<string>()).CaseSensitive()
+                .Column(s => s.StaffUsernames, cm => cm.WithName(StaffCanCreateByCompanyColumns.StaffUsernames).WithDbType<List<string>>()).CaseSensitive();
         }
     }
 }
