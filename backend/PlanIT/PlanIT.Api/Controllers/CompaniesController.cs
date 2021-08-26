@@ -66,11 +66,13 @@ namespace PlanIT.Api.Controllers
         }
 
         [HttpPut]
-        [Route("companies")]
-        public ActionResult UpdateCompany([FromBody] CompanyBO companyBO)
+        [Route("companies/{companyName}")]
+        public ActionResult UpdateCompany([FromRoute(Name = "companyName")] string companyName, [FromBody] CompanyBO companyBO)
         {
             try
             {
+                companyBO.CompanyName = companyName;
+
                 _companyService.UpdateCompany(companyBO);
 
                 return Ok();
