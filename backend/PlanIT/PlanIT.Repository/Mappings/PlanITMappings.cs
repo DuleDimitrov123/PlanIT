@@ -46,6 +46,14 @@ namespace PlanIT.Repository.Mappings
                 .Column(s => s.CompanyName, cm => cm.WithName(StaffByCompanyColumns.CompanyName).WithDbType<string>()).CaseSensitive()
                 .Column(s => s.StaffUsername, cm => cm.WithName(StaffByCompanyColumns.StaffUsername).WithDbType<string>()).CaseSensitive()
                 .Column(s => s.Position, cm => cm.WithName(StaffByCompanyColumns.Position).WithDbType<string>()).CaseSensitive();
+
+            For<TypeOfWorkByStaffAndDate>()
+                .TableName(DatabaseNames.TypeOfWorkByStaffAndDate).CaseSensitive()
+                .PartitionKey(t => t.StaffUsername)
+                .ClusteringKey(t => t.Date)
+                .Column(t => t.StaffUsername, cm => cm.WithName(TypeOfWorkByStaffAndDateColumns.StaffUsername).WithDbType<string>()).CaseSensitive()
+                .Column(t => t.Date, cm => cm.WithName(TypeOfWorkByStaffAndDateColumns.Date).WithDbType<LocalDate>()).CaseSensitive()
+                .Column(t => t.TypeOfWork, cm => cm.WithName(TypeOfWorkByStaffAndDateColumns.TypeOfWork).WithDbType<string>()).CaseSensitive();
         }
     }
 }
