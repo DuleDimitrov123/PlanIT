@@ -1,12 +1,12 @@
 ﻿using PlanIT.DataAccess;
+using PlanIT.DataAccess.Models;
 using PlanIT.Repository.Repositories.Contracts;
 using PlanIT.Service.BusinessObjects;
 using PlanIT.Service.Helpers;
 using PlanIT.Service.Services.Contracts;
-using System;
 using System.Collections.Generic;
 
-namespace PlanIT.Service
+namespace PlanIT.Service.Services.Implementations
 {
     public class CompanyService : ICompanyService
     {

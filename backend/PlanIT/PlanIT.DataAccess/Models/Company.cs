@@ -1,4 +1,4 @@
-﻿namespace PlanIT.DataAccess
+﻿namespace PlanIT.DataAccess.Models
 {
     public class Company
     {

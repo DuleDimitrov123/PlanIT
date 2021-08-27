@@ -1,35 +1,18 @@
 ﻿using Cassandra;
 using Cassandra.Mapping;
-using Cassandra.Data.Linq;
 using PlanIT.DataAccess.Constants;
-using PlanIT.DataAccess.Helpers;
+using PlanIT.DataAccess.Models;
+using PlanIT.Repository.Constants;
 using PlanIT.Repository.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlanIT.DataAccess.Models;
-using PlanIT.Repository.Constants;
 
 namespace PlanIT.Repository.Repositories.Implementations
 {
-    public class CompanyRepository : ICompanyRepository
+    public class StaffByCompanyRepository : IStaffByCompanyRepository
     {
-        public IList<Company> GetCompanies()
-        {
-            ISession session = SessionManager.GetSession();
-
-            if (session == null)
-            {
-                throw new Exception("Database isn't available at the moment, please try again later.");
-            }
-
-            var companyRowSet = session.Execute($"SELECT * FROM \"{DatabaseNames.Company}\"");
-            IList<Company> companies = CompanyHelper.CreateCompanyFromRowSet(companyRowSet);
-
-            return companies;
-        }
-
-        public Company GetCompanyByName(string companyName)
+        public IList<StaffByCompany> GetStaffByCompany(string companyName)
         {
             ISession session = SessionManager.GetSession();
 
@@ -39,14 +22,36 @@ namespace PlanIT.Repository.Repositories.Implementations
             }
 
             IMapper mapper = new Mapper(session);
-            Company company = mapper.
-                Fetch<Company>($"SELECT * FROM \"{DatabaseNames.Company}\" where \"{CompanyColumns.CompanyName}\" = ?", companyName)
-                .FirstOrDefault();
+            var staff = mapper.Fetch<StaffByCompany>($"WHERE \"{StaffByCompanyColumns.CompanyName}\" = ?", companyName).ToList();
 
-            return company;
+            return staff;
         }
 
-        public void CreateCompany(Company company)
+        public void AddStaffByCompany(StaffByCompany staffByCompany)
+        {
+            ISession session = SessionManager.GetSession();
+
+            if (session == null)
+            {
+                throw new Exception("Database isn't available at the moment, please try again later.");
+            }
+            IMapper mapper = new Mapper(session);
+            mapper.Insert<StaffByCompany>(staffByCompany);
+        }
+
+        public void RemoveStaffByCompany(StaffByCompany staffByCompany)
+        {
+            ISession session = SessionManager.GetSession();
+
+            if (session == null)
+            {
+                throw new Exception("Database isn't available at the moment, please try again later.");
+            }
+            IMapper mapper = new Mapper(session);
+            mapper.Delete<StaffByCompany>(staffByCompany);
+        }
+
+        public void ChangeStaffPosition(string companyName, string staffUsername, string newPosition)
         {
             ISession session = SessionManager.GetSession();
 
@@ -55,34 +60,9 @@ namespace PlanIT.Repository.Repositories.Implementations
                 throw new Exception("Database isn't available at the moment, please try again later.");
             }
 
-            IMapper mapper = new Mapper(session);
-            mapper.Insert(company);
-        }
-
-        public void UpdateCompany(Company company)
-        {
-            ISession session = SessionManager.GetSession();
-
-            if (session == null)
-            {
-                throw new Exception("Database isn't available at the moment, please try again later.");
-            }
-
-            IMapper mapper = new Mapper(session);
-            mapper.Update<Company>(company);
-        }
-
-        public void DeleteCompanyByName(string companyName)
-        {
-            ISession session = SessionManager.GetSession();
-
-            if (session == null)
-            {
-                throw new Exception("Database isn't available at the moment, please try again later.");
-            }
-
-            IMapper mapper = new Mapper(session);
-            mapper.DeleteIf<Company>($"WHERE \"{CompanyColumns.CompanyName}\" = ?", companyName);
+            string query = $"UPDATE \"{DatabaseNames.StaffByCompany}\" SET \"{StaffByCompanyColumns.Position}\" "
+                + $"= '{newPosition}' WHERE \"{StaffByCompanyColumns.CompanyName}\" = '{companyName}' AND \"{StaffByCompanyColumns.StaffUsername}\" = '{staffUsername}';";
+            session.Execute(query);
         }
     }
 }

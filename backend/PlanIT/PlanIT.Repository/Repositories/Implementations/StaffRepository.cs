@@ -1,35 +1,17 @@
 ﻿using Cassandra;
 using Cassandra.Mapping;
-using Cassandra.Data.Linq;
-using PlanIT.DataAccess.Constants;
-using PlanIT.DataAccess.Helpers;
+using PlanIT.DataAccess.Models;
+using PlanIT.Repository.Constants;
 using PlanIT.Repository.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlanIT.DataAccess.Models;
-using PlanIT.Repository.Constants;
 
 namespace PlanIT.Repository.Repositories.Implementations
 {
-    public class CompanyRepository : ICompanyRepository
+    public class StaffRepository : IStaffRepository
     {
-        public IList<Company> GetCompanies()
-        {
-            ISession session = SessionManager.GetSession();
-
-            if (session == null)
-            {
-                throw new Exception("Database isn't available at the moment, please try again later.");
-            }
-
-            var companyRowSet = session.Execute($"SELECT * FROM \"{DatabaseNames.Company}\"");
-            IList<Company> companies = CompanyHelper.CreateCompanyFromRowSet(companyRowSet);
-
-            return companies;
-        }
-
-        public Company GetCompanyByName(string companyName)
+        public IList<Staff> GetStaff()
         {
             ISession session = SessionManager.GetSession();
 
@@ -39,14 +21,12 @@ namespace PlanIT.Repository.Repositories.Implementations
             }
 
             IMapper mapper = new Mapper(session);
-            Company company = mapper.
-                Fetch<Company>($"SELECT * FROM \"{DatabaseNames.Company}\" where \"{CompanyColumns.CompanyName}\" = ?", companyName)
-                .FirstOrDefault();
+            IList<Staff> staff = mapper.Fetch<Staff>().ToList();
 
-            return company;
+            return staff;
         }
 
-        public void CreateCompany(Company company)
+        public Staff GetStaffByUsername(string username)
         {
             ISession session = SessionManager.GetSession();
 
@@ -56,10 +36,12 @@ namespace PlanIT.Repository.Repositories.Implementations
             }
 
             IMapper mapper = new Mapper(session);
-            mapper.Insert(company);
+            var staff = mapper.Fetch<Staff>($"WHERE \"{StaffColumns.Username}\" = ?", username).FirstOrDefault();
+
+            return staff;
         }
 
-        public void UpdateCompany(Company company)
+        public void CreateStaff(Staff staff)
         {
             ISession session = SessionManager.GetSession();
 
@@ -69,10 +51,10 @@ namespace PlanIT.Repository.Repositories.Implementations
             }
 
             IMapper mapper = new Mapper(session);
-            mapper.Update<Company>(company);
+            mapper.Insert(staff);
         }
 
-        public void DeleteCompanyByName(string companyName)
+        public void UpdateStaff(Staff staff)
         {
             ISession session = SessionManager.GetSession();
 
@@ -82,7 +64,20 @@ namespace PlanIT.Repository.Repositories.Implementations
             }
 
             IMapper mapper = new Mapper(session);
-            mapper.DeleteIf<Company>($"WHERE \"{CompanyColumns.CompanyName}\" = ?", companyName);
+            mapper.Update<Staff>(staff);
+        }
+
+        public void DeleteStaffByUsername(string username)
+        {
+            ISession session = SessionManager.GetSession();
+
+            if (session == null)
+            {
+                throw new Exception("Database isn't available at the moment, please try again later.");
+            }
+
+            IMapper mapper = new Mapper(session);
+            mapper.Delete<Staff>($"WHERE \"{StaffColumns.Username}\" = ?", username);
         }
     }
 }

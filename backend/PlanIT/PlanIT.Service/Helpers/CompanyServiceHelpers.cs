@@ -1,4 +1,4 @@
-﻿using PlanIT.DataAccess;
+﻿using PlanIT.DataAccess.Models;
 using PlanIT.Service.BusinessObjects;
 
 namespace PlanIT.Service.Helpers
