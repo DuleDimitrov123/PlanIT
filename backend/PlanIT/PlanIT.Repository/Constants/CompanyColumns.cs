@@ -12,8 +12,6 @@
 
         public static string Description = "Description";
 
-        public static string TypeOfWorkByCompany = "TypeOfWorkByCompany";
-
         public static string NumberOfWorkplaces = "NumberOfWorkplaces";
     }
 }
