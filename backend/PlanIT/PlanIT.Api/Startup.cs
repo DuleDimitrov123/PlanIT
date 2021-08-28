@@ -11,6 +11,7 @@ using PlanIT.Repository;
 using PlanIT.Repository.Repositories.Contracts;
 using PlanIT.Repository.Repositories.Implementations;
 using PlanIT.Service;
+using PlanIT.Service.BusinessLogic;
 using PlanIT.Service.Services.Contracts;
 using PlanIT.Service.Services.Implementations;
 using System;
@@ -39,6 +40,11 @@ namespace PlanIT.Api
             services.AddScoped<IStaffService, StaffService>();
             services.AddScoped<IStaffCanCreateByCompanyRepository, StaffCanCreateByCompanyRepository>();
             services.AddScoped<IStaffByCompanyRepository, StaffByCompanyRepository>();
+
+            services.AddScoped<ICheckWorkingFromOffice, CovidCheckWorkingFromOffice>();
+            services.AddScoped<ITypeOfWorkByStaffAndDateRepository, TypeOfWorkByStaffAndDateRepository>();
+            services.AddScoped<ITypeOfWorkByCompanyRepository, TypeOfWorkByCompanyRepository>();
+            services.AddScoped<ITypeOfWorkService, TypeOfWorkService>();
             //services.AddTransient<ICompanyService, CompanyService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>

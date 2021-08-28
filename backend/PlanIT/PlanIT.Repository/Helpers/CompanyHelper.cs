@@ -15,6 +15,7 @@ namespace PlanIT.DataAccess.Helpers
             company.City = row[CompanyColumns.City] != null ? row[CompanyColumns.City].ToString() : string.Empty;
             company.Country = row[CompanyColumns.Country] != null ? row[CompanyColumns.Country].ToString() : string.Empty;
             company.Description = row[CompanyColumns.Description] != null ? row[CompanyColumns.Description].ToString() : string.Empty;
+            company.NumberOfWorkplaces = row[CompanyColumns.NumberOfWorkplaces] != null ? (int)row[CompanyColumns.NumberOfWorkplaces] : 0;
 
             return company;
         }

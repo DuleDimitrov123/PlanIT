@@ -3,7 +3,6 @@ using PlanIT.DataAccess;
 using PlanIT.DataAccess.Constants;
 using PlanIT.DataAccess.Models;
 using PlanIT.Repository.Constants;
-using System;
 using System.Collections.Generic;
 
 namespace PlanIT.Repository.Mappings
@@ -19,7 +18,8 @@ namespace PlanIT.Repository.Mappings
                 .Column(c => c.Country, cm => cm.WithName(CompanyColumns.Country).WithDbType<string>()).CaseSensitive()
                 .Column(c => c.City, cm => cm.WithName(CompanyColumns.City).WithDbType<string>()).CaseSensitive()
                 .Column(c => c.Address, cm => cm.WithName(CompanyColumns.Address).WithDbType<string>()).CaseSensitive()
-                .Column(c => c.Description, cm => cm.WithName(CompanyColumns.Description).WithDbType<string>()).CaseSensitive();
+                .Column(c => c.Description, cm => cm.WithName(CompanyColumns.Description).WithDbType<string>()).CaseSensitive()
+                .Column(c => c.NumberOfWorkplaces, cm => cm.WithName(CompanyColumns.NumberOfWorkplaces).WithDbType<int>()).CaseSensitive();
 
             For<Staff>()
                 .TableName(DatabaseNames.Staff).CaseSensitive()
@@ -46,6 +46,24 @@ namespace PlanIT.Repository.Mappings
                 .Column(s => s.CompanyName, cm => cm.WithName(StaffByCompanyColumns.CompanyName).WithDbType<string>()).CaseSensitive()
                 .Column(s => s.StaffUsername, cm => cm.WithName(StaffByCompanyColumns.StaffUsername).WithDbType<string>()).CaseSensitive()
                 .Column(s => s.Position, cm => cm.WithName(StaffByCompanyColumns.Position).WithDbType<string>()).CaseSensitive();
+
+            For<TypeOfWorkByStaffAndDate>()
+                .TableName(DatabaseNames.TypeOfWorkByStaffAndDate).CaseSensitive()
+                .PartitionKey(t => t.StaffUsername)
+                .ClusteringKey(t => t.Date)
+                .Column(t => t.StaffUsername, cm => cm.WithName(TypeOfWorkByStaffAndDateColumns.StaffUsername).WithDbType<string>()).CaseSensitive()
+                .Column(t => t.Date, cm => cm.WithName(TypeOfWorkByStaffAndDateColumns.Date).WithDbType<LocalDate>()).CaseSensitive()
+                .Column(t => t.TypeOfWork, cm => cm.WithName(TypeOfWorkByStaffAndDateColumns.TypeOfWork).WithDbType<string>()).CaseSensitive();
+
+            For<TypeOfWorkByCompany>()
+                .TableName(DatabaseNames.TypeOfWorkByCompany).CaseSensitive()
+                .PartitionKey(t => t.CompanyName)
+                .ClusteringKey(t => t.Date)
+                .ClusteringKey(t => t.StaffUsername)
+                .Column(t => t.CompanyName, cm => cm.WithName(TypeOfWorkByCompanyColumns.CompanyName).WithDbType<string>()).CaseSensitive()
+                .Column(t => t.Date, cm => cm.WithName(TypeOfWorkByCompanyColumns.Date).WithDbType<LocalDate>()).CaseSensitive()
+                .Column(t => t.StaffUsername, cm => cm.WithName(TypeOfWorkByCompanyColumns.StaffUsername).WithDbType<string>()).CaseSensitive()
+                .Column(t => t.TypeOfWork, cm => cm.WithName(TypeOfWorkByCompanyColumns.TypeOfWork).WithDbType<string>()).CaseSensitive();
         }
     }
 }
