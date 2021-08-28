@@ -9,7 +9,6 @@ namespace PlanIT.Service.BusinessLogic
 {
     public class CovidCheckWorkingFromOffice : ICheckWorkingFromOffice
     {
-        //maybe consider finding a better way than private field...
         private readonly double _availablePercentage = 50.0;
 
         public bool Check(ITypeOfWorkService typeOfWorkService, ICompanyService companyService, ExtendedTypeOfWorkBO extendedTypeOfWorkBO)
