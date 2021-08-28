@@ -1,6 +1,5 @@
 ﻿using Cassandra;
 using Cassandra.Mapping;
-using PlanIT.DataAccess.Constants;
 using PlanIT.DataAccess.Models;
 using PlanIT.Repository.Constants;
 using PlanIT.Repository.Repositories.Contracts;
@@ -10,9 +9,9 @@ using System.Linq;
 
 namespace PlanIT.Repository.Repositories.Implementations
 {
-    public class TypeOfWorkByStaffAndDateRepository : ITypeOfWorkByStaffAndDateRepository
+    public class TypeOfWorkByCompanyRepository : ITypeOfWorkByCompanyRepository
     {
-        public IList<TypeOfWorkByStaffAndDate> GetAllTypeOfWorkByStaffAndDate()
+        public IList<TypeOfWorkByCompany> GetAllTypeOfWorkByCompany()
         {
             ISession session = SessionManager.GetSession();
 
@@ -22,12 +21,12 @@ namespace PlanIT.Repository.Repositories.Implementations
             }
 
             IMapper mapper = new Mapper(session);
-            IList<TypeOfWorkByStaffAndDate> typeOfWork = mapper.Fetch<TypeOfWorkByStaffAndDate>().ToList();
+            IList<TypeOfWorkByCompany> typeOfWork = mapper.Fetch<TypeOfWorkByCompany>().ToList();
 
             return typeOfWork;
         }
 
-        public IList<TypeOfWorkByStaffAndDate> GetStaffTypeOfWorkHistory(string staffUsername)
+        public IList<TypeOfWorkByCompany> GetTypeOfWorkByCompany(string companyName)
         {
             ISession session = SessionManager.GetSession();
 
@@ -37,12 +36,12 @@ namespace PlanIT.Repository.Repositories.Implementations
             }
 
             IMapper mapper = new Mapper(session);
-            IList<TypeOfWorkByStaffAndDate> typeOfWork = mapper.Fetch<TypeOfWorkByStaffAndDate>($"WHERE \"{TypeOfWorkByStaffAndDateColumns.StaffUsername}\" = ?", staffUsername).ToList();
+            IList<TypeOfWorkByCompany> typeOfWork = mapper.Fetch<TypeOfWorkByCompany>($"WHERE \"{TypeOfWorkByCompanyColumns.CompanyName}\" = ?", companyName).ToList();
 
             return typeOfWork;
         }
 
-        public string GetTypeOfWorkByStaffAndDate(string staffUsername, LocalDate date)
+        public IList<TypeOfWorkByCompany> GetTypeOfWorkByCompanyAndDate(string companyName, LocalDate date)
         {
             ISession session = SessionManager.GetSession();
 
@@ -52,12 +51,30 @@ namespace PlanIT.Repository.Repositories.Implementations
             }
 
             IMapper mapper = new Mapper(session);
-            var typeOfWork = mapper.Single<TypeOfWorkByStaffAndDate>($"WHERE \"{TypeOfWorkByStaffAndDateColumns.StaffUsername}\" = ? AND \"{TypeOfWorkByStaffAndDateColumns.Date}\" = ?", staffUsername, date);
+            IList<TypeOfWorkByCompany> typeOfWork = mapper.Fetch<TypeOfWorkByCompany>($"WHERE \"{TypeOfWorkByCompanyColumns.CompanyName}\" = ? "
+                + $"AND \"{TypeOfWorkByCompanyColumns.Date}\" = ?", companyName, date).ToList();
+
+            return typeOfWork;
+        }
+
+        public string GetTypeOfWorkByCompanyDateAndStaffUsername(string companyName, LocalDate date, string staffUsername)
+        {
+            ISession session = SessionManager.GetSession();
+
+            if (session == null)
+            {
+                throw new Exception("Database isn't available at the moment, please try again later.");
+            }
+
+            IMapper mapper = new Mapper(session);
+            var typeOfWork = mapper.Single<TypeOfWorkByCompany>($"WHERE \"{TypeOfWorkByCompanyColumns.CompanyName}\" = ? "
+                + $"AND \"{TypeOfWorkByCompanyColumns.Date}\" = ? AND \"{TypeOfWorkByCompanyColumns.StaffUsername}\" = ?",
+                companyName, date, staffUsername);
 
             return typeOfWork?.TypeOfWork;
         }
 
-        public void AddTypeOfWorkByStaffAndDate(TypeOfWorkByStaffAndDate typeOfWorkByStaffAndDate)
+        public void AddTypeOfWorkByCompany(TypeOfWorkByCompany typeOfWorkByCompany)
         {
             ISession session = SessionManager.GetSession();
 
@@ -67,10 +84,10 @@ namespace PlanIT.Repository.Repositories.Implementations
             }
 
             IMapper mapper = new Mapper(session);
-            mapper.Insert(typeOfWorkByStaffAndDate);
+            mapper.Insert(typeOfWorkByCompany);
         }
 
-        public void AddTypeOfWorkByStaffAndDates(IList<TypeOfWorkByStaffAndDate> typeOfWorkByStaffAndDates)
+        public void AddTypesOfWorkByCompany(IList<TypeOfWorkByCompany> typesOfWorkByCompany)
         {
             ISession session = SessionManager.GetSession();
 
@@ -80,13 +97,13 @@ namespace PlanIT.Repository.Repositories.Implementations
             }
 
             IMapper mapper = new Mapper(session);
-            foreach(var typeOfWorkByStaffAndDate in typeOfWorkByStaffAndDates)
+            foreach(var typeOfWorkByCompany in typesOfWorkByCompany)
             {
-                mapper.Insert(typeOfWorkByStaffAndDate);
+                mapper.Insert(typeOfWorkByCompany);
             }
         }
 
-        public void ChangeTypeOfWorkByStaffAndDate(string staffUsername, LocalDate date, string newTypeOfWork)
+        public void UpdateTypeOfWorkByCompany(TypeOfWorkByCompany typeOfWorkByCompany)
         {
             ISession session = SessionManager.GetSession();
 
@@ -96,9 +113,7 @@ namespace PlanIT.Repository.Repositories.Implementations
             }
 
             IMapper mapper = new Mapper(session);
-            string query = $"SET \"{TypeOfWorkByStaffAndDateColumns.TypeOfWork}\" = ? WHERE "
-                + $"\"{TypeOfWorkByStaffAndDateColumns.StaffUsername}\" = ? AND \"{TypeOfWorkByStaffAndDateColumns.Date}\" = ?";
-            mapper.Update<TypeOfWorkByStaffAndDate>(query, newTypeOfWork, staffUsername, date);
+            mapper.Update(typeOfWorkByCompany);
         }
     }
 }

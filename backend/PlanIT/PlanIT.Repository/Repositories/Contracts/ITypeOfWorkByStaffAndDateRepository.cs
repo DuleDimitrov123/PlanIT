@@ -14,6 +14,8 @@ namespace PlanIT.Repository.Repositories.Contracts
 
         void AddTypeOfWorkByStaffAndDate(TypeOfWorkByStaffAndDate typeOfWorkByStaffAndDate);
 
+        void AddTypeOfWorkByStaffAndDates(IList<TypeOfWorkByStaffAndDate> typeOfWorkByStaffAndDates);
+
         void ChangeTypeOfWorkByStaffAndDate(string staffUsername, LocalDate date, string newTypeOfWork);
     }
 }

@@ -13,5 +13,7 @@
         public static string StaffByCompany = "StaffByCompany";
 
         public static string TypeOfWorkByStaffAndDate = "TypeOfWorkByStaffAndDate";
+
+        public static string TypeOfWorkByCompany = "TypeOfWorkByCompany";
     }
 }

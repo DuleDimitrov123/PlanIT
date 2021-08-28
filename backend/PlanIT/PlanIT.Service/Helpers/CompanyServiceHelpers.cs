@@ -13,7 +13,8 @@ namespace PlanIT.Service.Helpers
                 Country = companyBO.Country,
                 City = companyBO.City,
                 Address = companyBO.Address,
-                Description = companyBO.Description
+                Description = companyBO.Description,
+                NumberOfWorkplaces = companyBO.NumberOfWorkplaces
             };
 
             return company;
@@ -27,7 +28,8 @@ namespace PlanIT.Service.Helpers
                 Country = company?.Country,
                 City = company?.City,
                 Address = company?.Address,
-                Description = company?.Description
+                Description = company?.Description,
+                NumberOfWorkplaces = company.NumberOfWorkplaces
             };
 
             return companyBO;
