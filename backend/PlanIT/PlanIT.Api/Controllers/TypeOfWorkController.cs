@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PlanIT.Service.BusinessObjects;
 using PlanIT.Service.Services.Contracts;
 using System;
@@ -9,6 +10,7 @@ namespace PlanIT.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class TypeOfWorkController : ControllerBase
     {
         private readonly ITypeOfWorkService _typeOfWorkService;

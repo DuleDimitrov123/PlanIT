@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PlanIT.Service.BusinessObjects;
 using PlanIT.Service.Services.Contracts;
@@ -12,6 +13,7 @@ namespace PlanIT.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class StaffController : ControllerBase
     {
         private readonly IStaffService _staffService;

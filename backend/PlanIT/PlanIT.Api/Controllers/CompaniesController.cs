@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PlanIT.Service.BusinessObjects;
-using PlanIT.Service.Constants;
 using PlanIT.Service.Services.Contracts;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ namespace PlanIT.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class CompaniesController : ControllerBase
     {
         private readonly ICompanyService _companyService;
@@ -21,6 +21,7 @@ namespace PlanIT.Api.Controllers
 
         [HttpGet]
         [Route("companies")]
+        [AllowAnonymous]
         public ActionResult<IList<CompanyBO>> GetCompanies()
         {
             try
@@ -37,7 +38,6 @@ namespace PlanIT.Api.Controllers
 
         [HttpGet]
         [Route("company/{companyName}")]
-        [Authorize]
         public ActionResult<CompanyBO> GetCompanyByName([FromRoute(Name = "companyName")] string companyName)
         {
             try
@@ -54,7 +54,6 @@ namespace PlanIT.Api.Controllers
 
         [HttpPost]
         [Route("companies")]
-        [Authorize(Policy = "StaffCanCreate")]
         public ActionResult CreateCompany([FromBody] CompanyBO companyBO)
         {
             try
@@ -89,6 +88,7 @@ namespace PlanIT.Api.Controllers
 
         [HttpDelete]
         [Route("companies/{companyName}")]
+        [Authorize(Policy = "StaffCanCreate")]
         public ActionResult DeleteCompanyByName([FromRoute] string companyName)
         {
             try

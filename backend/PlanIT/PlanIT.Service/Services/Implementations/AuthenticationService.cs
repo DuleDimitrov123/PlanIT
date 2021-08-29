@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using PlanIT.Service.BusinessObjects;
-using PlanIT.Service.Constants;
 using PlanIT.Service.Services.Contracts;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -38,7 +37,11 @@ namespace PlanIT.Service.Services.Implementations
 
         public string Register(StaffBO staffBO)
         {
-            throw new System.NotImplementedException();
+            _staffService.CreateStaff(staffBO);
+
+            var token = GenerateJWTToken(staffBO);
+
+            return token;
         }
 
         private string GenerateJWTToken(StaffBO staffBO)
