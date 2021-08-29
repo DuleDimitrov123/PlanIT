@@ -129,7 +129,7 @@ namespace PlanIT.Api
             {
                 cfg.AddPolicy("NormalStaff", policy => policy.RequireClaim("Staff", "NormalStaff"));
 
-                //StaffCanCreate can access everything that NormalStaff can ("Staff"), but also some creational things ("StaffCanCreate")
+                //StaffCanCreate can access everything that NormalStaff can, but also some creational things ("StaffCanCreate")
                 cfg.AddPolicy("StaffCanCreate", policy => policy.RequireClaim("Staff", "StaffCanCreate"));
             });
         }
