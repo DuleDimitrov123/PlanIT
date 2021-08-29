@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PlanIT.Repository;
 using PlanIT.Repository.Repositories.Contracts;
@@ -17,6 +19,7 @@ using PlanIT.Service.Services.Implementations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace PlanIT.Api
@@ -46,10 +49,31 @@ namespace PlanIT.Api
             services.AddScoped<ITypeOfWorkByCompanyRepository, TypeOfWorkByCompanyRepository>();
             services.AddScoped<ITypeOfWorkService, TypeOfWorkService>();
             //services.AddTransient<ICompanyService, CompanyService>();
+
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            ConfigureAuthentication(services);
+            ConfigureAuthorization(services);
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PlanIT.Api", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please enter JWT with Bearer into field",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer"}
+                        },
+                        new string[] {}
+                    }
+                });
             });
         }
 
@@ -67,11 +91,46 @@ namespace PlanIT.Api
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+        }
+
+        private void ConfigureAuthentication(IServiceCollection services)
+        {
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidAudience = Configuration["Jwt:Audience"],
+                ValidIssuer = Configuration["Jwt:Issuer"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SecretKey"])),
+                ClockSkew = TimeSpan.Zero
+            };
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(cfg =>
+            {
+                cfg.TokenValidationParameters = tokenValidationParameters;
+            });
+        }
+
+        private void ConfigureAuthorization(IServiceCollection services)
+        {
+            services.AddAuthorization(cfg =>
+            {
+                cfg.AddPolicy("NormalStaff", policy => policy.RequireClaim("Staff", "NormalStaff"));
+
+                //StaffCanCreate can access everything that NormalStaff can, but also some creational things ("StaffCanCreate")
+                cfg.AddPolicy("StaffCanCreate", policy => policy.RequireClaim("Staff", "StaffCanCreate"));
             });
         }
     }

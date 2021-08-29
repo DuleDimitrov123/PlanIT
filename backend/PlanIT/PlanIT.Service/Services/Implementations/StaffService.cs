@@ -39,6 +39,12 @@ namespace PlanIT.Service.Services.Implementations
         public StaffBO GetStaffByUsername(string username)
         {
             var staff = _staffRepository.GetStaffByUsername(username);
+
+            if(staff == null)
+            {
+                return null;
+            }
+
             var staffBO = StaffServiceHelpers.MakeStaffBOFromStaff(staff);
             return staffBO;
         }
