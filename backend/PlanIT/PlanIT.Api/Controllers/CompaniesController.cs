@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PlanIT.Service.BusinessObjects;
+using PlanIT.Service.Constants;
 using PlanIT.Service.Services.Contracts;
 using System;
 using System.Collections.Generic;
@@ -35,6 +37,7 @@ namespace PlanIT.Api.Controllers
 
         [HttpGet]
         [Route("company/{companyName}")]
+        [Authorize]
         public ActionResult<CompanyBO> GetCompanyByName([FromRoute(Name = "companyName")] string companyName)
         {
             try
@@ -51,6 +54,7 @@ namespace PlanIT.Api.Controllers
 
         [HttpPost]
         [Route("companies")]
+        [Authorize(Policy = "StaffCanCreate")]
         public ActionResult CreateCompany([FromBody] CompanyBO companyBO)
         {
             try
