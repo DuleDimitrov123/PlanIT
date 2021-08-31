@@ -3,6 +3,7 @@ using PlanIT.DataAccess;
 using PlanIT.DataAccess.Constants;
 using PlanIT.DataAccess.Models;
 using PlanIT.Repository.Constants;
+using System;
 using System.Collections.Generic;
 
 namespace PlanIT.Repository.Mappings
@@ -64,6 +65,27 @@ namespace PlanIT.Repository.Mappings
                 .Column(t => t.Date, cm => cm.WithName(TypeOfWorkByCompanyColumns.Date).WithDbType<LocalDate>()).CaseSensitive()
                 .Column(t => t.StaffUsername, cm => cm.WithName(TypeOfWorkByCompanyColumns.StaffUsername).WithDbType<string>()).CaseSensitive()
                 .Column(t => t.TypeOfWork, cm => cm.WithName(TypeOfWorkByCompanyColumns.TypeOfWork).WithDbType<string>()).CaseSensitive();
+
+            For<MeetingRoomByCompany>()
+                .TableName(DatabaseNames.MeetingRoomByCompany).CaseSensitive()
+                .PartitionKey(m => m.CompanyName)
+                .ClusteringKey(m => m.MeetingRoom)
+                .Column(m => m.CompanyName, cm => cm.WithName(MeetingRoomByCompanyColumns.CompanyName).WithDbType<string>()).CaseSensitive()
+                .Column(m => m.MeetingRoom, cm => cm.WithName(MeetingRoomByCompanyColumns.MeetingRoom).WithDbType<string>()).CaseSensitive()
+                .Column(m => m.NumberOfSeats, cm => cm.WithName(MeetingRoomByCompanyColumns.NumberOfSeats).WithDbType<int>()).CaseSensitive();
+
+            For<ReservedMeetingRoom>()
+                .TableName(DatabaseNames.ReservedMeetingRoom).CaseSensitive()
+                .PartitionKey(a => a.MeetingRoom)
+                .PartitionKey(a => a.CompanyName)
+                .ClusteringKey(a => a.StartDateTime)
+                .ClusteringKey(a => a.EndDateTime)
+                .Column(a => a.MeetingRoom, cm => cm.WithName(ReservedMeetingRoomColumns.MeetingRoom).WithDbType<string>()).CaseSensitive()
+                .Column(a => a.CompanyName, cm => cm.WithName(ReservedMeetingRoomColumns.CompanyName).WithDbType<string>()).CaseSensitive()
+                .Column(a => a.StartDateTime, cm => cm.WithName(ReservedMeetingRoomColumns.StartDateTime).WithDbType<DateTimeOffset>()).CaseSensitive()
+                .Column(a => a.EndDateTime, cm => cm.WithName(ReservedMeetingRoomColumns.EndDateTime).WithDbType<DateTimeOffset>()).CaseSensitive()
+                .Column(a => a.StaffUsernameWhoReserved, cm => cm.WithName(ReservedMeetingRoomColumns.StaffUsernameWhoReserved).WithDbType<string>()).CaseSensitive()
+                .Column(a => a.NumberOfSeatsUsed, cm => cm.WithName(ReservedMeetingRoomColumns.NumberOfSeatsUsed).WithDbType<int>()).CaseSensitive();
         }
     }
 }

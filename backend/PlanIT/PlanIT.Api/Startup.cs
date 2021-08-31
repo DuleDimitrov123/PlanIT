@@ -54,6 +54,11 @@ namespace PlanIT.Api
             ConfigureAuthentication(services);
             ConfigureAuthorization(services);
 
+            services.AddScoped<IMeetingRoomByCompanyRepository, MeetingRoomByCompanyRepository>();
+            services.AddScoped<IReservedMeetingRoomRepository, ReservedMeetingRoomRepository>();
+            services.AddScoped<IAllowedNumberInMeetingRoom, CovidAllowedNumberInMeetingRoom>();
+            services.AddScoped<IMeetingRoomService, MeetingRoomService>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
