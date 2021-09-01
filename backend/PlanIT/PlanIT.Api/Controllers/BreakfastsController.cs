@@ -79,7 +79,7 @@ namespace PlanIT.Api.Controllers
 
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.ToString());
             }
@@ -95,13 +95,13 @@ namespace PlanIT.Api.Controllers
 
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.ToString());
             }
         }
 
-       [HttpPost]
+        [HttpPost]
         [Route("breakfasts/actions/upgrade-available-breakfast")]
         public ActionResult UpgradeAvailableBreakfastByCompany([FromBody] UpgradeAvailableBreakfastByCompanyRequest request)
         {
@@ -111,7 +111,7 @@ namespace PlanIT.Api.Controllers
 
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.ToString());
             }
@@ -126,6 +126,54 @@ namespace PlanIT.Api.Controllers
                 _breakfastService.UpdateAvailableBreakfastByCompany(request.CompanyName, request.Date, request.RemovableBreakfastItems, false);
 
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpGet]
+        [Route("breakfasts/actions/all-by-staff")]
+        public ActionResult GettAllBreakfastByStaff()
+        {
+            try
+            {
+                var breakfasts = _breakfastService.GettAllBreakfastByStaff();
+
+                return Ok(breakfasts);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpGet]
+        [Route("breakfasts/actions/all-by-staff/{staffUsername}")]
+        public ActionResult GetBreakfastByStaff([FromRoute(Name = "staffUsername")] string staffUsername)
+        {
+            try
+            {
+                var breakfasts = _breakfastService.GetBreakfastByStaff(staffUsername);
+
+                return Ok(breakfasts);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpPost]
+        [Route("breakfasts/actions/all-by-staff-and-date")]
+        public ActionResult GetBreakfastByStaffAndDate([FromBody] GetBreakfastByStaffAndDateRequest request)
+        {
+            try
+            {
+                var breakfasts = _breakfastService.GetBreakfastByStaffAndDate(request.StaffUsername, request.Date);
+
+                return Ok(breakfasts);
             }
             catch (Exception ex)
             {

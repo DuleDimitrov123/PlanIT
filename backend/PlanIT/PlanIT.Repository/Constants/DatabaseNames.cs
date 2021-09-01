@@ -21,5 +21,7 @@
         public static string ReservedMeetingRoom = "ReservedMeetingRoom";
 
         public static string AvailableBreakfastByCompany = "AvailableBreakfastByCompany";
+
+        public static string BreakfastByStaff = "BreakfastByStaff";
     }
 }

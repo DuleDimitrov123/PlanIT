@@ -17,5 +17,15 @@ namespace PlanIT.Service.Services.Contracts
         void AddSameBreakfastForDateInterval(string companyName, IList<string> breakfastItems, LocalDate startDate, LocalDate endDate);
 
         void UpdateAvailableBreakfastByCompany(string companyName, LocalDate date, IList<string> newBreakfastItems, bool add);
+
+        IList<BreakfastByStaff> GettAllBreakfastByStaff();
+
+        IList<BreakfastByStaff> GetBreakfastByStaff(string staffUsername);
+
+        IList<string> GetBreakfastByStaffAndDate(string staffUsername, LocalDate date);
+
+        void AddBreakfastByStaff(BreakfastByStaff breakfastByStaff);
+
+        void DeleteBreakfastByStaffAndDate(string staffUsername, LocalDate date);
     }
 }

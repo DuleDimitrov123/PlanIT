@@ -60,6 +60,7 @@ namespace PlanIT.Api
             services.AddScoped<IMeetingRoomService, MeetingRoomService>();
 
             services.AddScoped<IAvailableBreakfastByCompanyRepository, AvailableBreakfastByCompanyRepository>();
+            services.AddScoped<IBreakfastByStaffRepository, BreakfastByStaffRepository>();
             services.AddScoped<IBreakfastService, BreakfastService>();
 
             services.AddControllers();

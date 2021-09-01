@@ -93,6 +93,14 @@ namespace PlanIT.Repository.Mappings
                 .Column(a => a.CompanyName, cm => cm.WithName(AvailableBreakfastByCompanyColumns.CompanyName).WithDbType<string>()).CaseSensitive()
                 .Column(a => a.Date, cm => cm.WithName(AvailableBreakfastByCompanyColumns.Date).WithDbType<LocalDate>()).CaseSensitive()
                 .Column(a => a.BreakfastItems, cm => cm.WithName(AvailableBreakfastByCompanyColumns.BreakfastItems).WithDbType<IList<string>>()).CaseSensitive();
+
+            For<BreakfastByStaff>()
+                .TableName(DatabaseNames.BreakfastByStaff).CaseSensitive()
+                .PartitionKey(b => b.StaffUsername)
+                .ClusteringKey(b => b.Date)
+                .Column(b => b.StaffUsername, cm => cm.WithName(BreakfastByStaffColumns.StaffUsername).WithDbType<string>()).CaseSensitive()
+                .Column(b => b.Date, cm => cm.WithName(BreakfastByStaffColumns.Date).WithDbType<LocalDate>()).CaseSensitive()
+                .Column(b => b.BreakfastItems, cm => cm.WithName(BreakfastByStaffColumns.BreakfastItems).WithDbType<IList<string>>()).CaseSensitive();
         }
     }
 }

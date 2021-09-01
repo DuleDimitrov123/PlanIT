@@ -12,5 +12,7 @@ namespace PlanIT.Api.Models
         public record DowngradeAvailableBreakfastByCompanyRequest(string CompanyName, LocalDate Date, IList<string> RemovableBreakfastItems);
 
         public record AddSameBreakfastForDateIntervalRequest(string CompanyName, IList<string> BreakfastItems, LocalDate StartDate, LocalDate EndDate);
+
+        public record GetBreakfastByStaffAndDateRequest(string StaffUsername, LocalDate Date);
     }
 }
