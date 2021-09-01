@@ -2,7 +2,7 @@
 
 namespace PlanIT.Service.BusinessLogic
 {
-    public class CantWFOException : Exception
+    public class NotAvailableMeetingRoomException : Exception
     {
     }
 }

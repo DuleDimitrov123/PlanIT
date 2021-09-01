@@ -15,5 +15,9 @@
         public static string TypeOfWorkByStaffAndDate = "TypeOfWorkByStaffAndDate";
 
         public static string TypeOfWorkByCompany = "TypeOfWorkByCompany";
+
+        public static string MeetingRoomByCompany = "MeetingRoomByCompany";
+
+        public static string ReservedMeetingRoom = "ReservedMeetingRoom";
     }
 }
