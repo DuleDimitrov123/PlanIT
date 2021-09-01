@@ -180,5 +180,53 @@ namespace PlanIT.Api.Controllers
                 return BadRequest(ex.ToString());
             }
         }
+
+        [HttpGet]
+        [Route("breakfasts/actions/all-by-company")]
+        public ActionResult GetAllBreakfastByCompany()
+        {
+            try
+            {
+                var breakfasts = _breakfastService.GetAllBreakfastByCompany();
+
+                return Ok(breakfasts); 
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpGet]
+        [Route("breakfasts/actions/all-by-company/{companyName}")]
+        public ActionResult GetBreakfastByCompany([FromRoute(Name = "companyName")] string companyName)
+        {
+            try
+            {
+                var breakfasts = _breakfastService.GetBreakfastByCompany(companyName);
+
+                return Ok(breakfasts);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpPost]
+        [Route("breakfasts/actions/all-by-company-and-date")]
+        public ActionResult GetBreakfastByCompanyAndDate([FromBody] GetBreakfastByCompanyAndDateRequest request)
+        {
+            try
+            {
+                var breakfasts = _breakfastService.GetBreakfastByCompanyAndDate(request.CompanyName, request.Date);
+
+                return Ok(breakfasts);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
     }
 }

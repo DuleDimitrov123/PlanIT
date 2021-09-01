@@ -27,5 +27,15 @@ namespace PlanIT.Service.Services.Contracts
         void AddBreakfastByStaff(BreakfastByStaff breakfastByStaff);
 
         void DeleteBreakfastByStaffAndDate(string staffUsername, LocalDate date);
+
+        IList<BreakfastByCompany> GetAllBreakfastByCompany();
+
+        IList<BreakfastByCompany> GetBreakfastByCompany(string companyName);
+
+        IList<BreakfastByCompany> GetBreakfastByCompanyAndDate(string companyName, LocalDate date);
+
+        void AddBreakfastByCompany(BreakfastByCompany breakfastByCompany);
+
+        void DeleteBreakfastByCompany(string companyName, LocalDate date, string staffUsername);
     }
 }

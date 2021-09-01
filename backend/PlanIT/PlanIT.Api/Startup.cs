@@ -47,6 +47,7 @@ namespace PlanIT.Api
             services.AddScoped<ICheckWorkingFromOffice, CovidCheckWorkingFromOffice>();
             services.AddScoped<ITypeOfWorkByStaffAndDateRepository, TypeOfWorkByStaffAndDateRepository>();
             services.AddScoped<ITypeOfWorkByCompanyRepository, TypeOfWorkByCompanyRepository>();
+            services.AddScoped<IBreakfastByCompanyRepository, BreakfastByCompanyRepository>();
             services.AddScoped<ITypeOfWorkService, TypeOfWorkService>();
             //services.AddTransient<ICompanyService, CompanyService>();
 

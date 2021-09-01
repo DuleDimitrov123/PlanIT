@@ -10,12 +10,15 @@ namespace PlanIT.Service.Services.Implementations
     {
         private readonly IAvailableBreakfastByCompanyRepository _availableBreakfastByCompanyRepository;
         private readonly IBreakfastByStaffRepository _breakfastByStaffRepository;
+        private readonly IBreakfastByCompanyRepository _breakfastByCompanyRepository;
 
         public BreakfastService(IAvailableBreakfastByCompanyRepository availableBreakfastByCompanyRepository,
-            IBreakfastByStaffRepository breakfastByStaffRepository)
+            IBreakfastByStaffRepository breakfastByStaffRepository,
+            IBreakfastByCompanyRepository breakfastByCompanyRepository)
         {
             _availableBreakfastByCompanyRepository = availableBreakfastByCompanyRepository;
             _breakfastByStaffRepository = breakfastByStaffRepository;
+            _breakfastByCompanyRepository = breakfastByCompanyRepository;
         }
 
         public IList<AvailableBreakfastByCompany> GetAllAvailableBreakfast()
@@ -71,6 +74,31 @@ namespace PlanIT.Service.Services.Implementations
         public void DeleteBreakfastByStaffAndDate(string staffUsername, LocalDate date)
         {
             _breakfastByStaffRepository.DeleteBreakfastByStaffAndDate(staffUsername, date);
+        }
+
+        public IList<BreakfastByCompany> GetAllBreakfastByCompany()
+        {
+            return _breakfastByCompanyRepository.GetAllBreakfastByCompany();
+        }
+
+        public IList<BreakfastByCompany> GetBreakfastByCompany(string companyName)
+        {
+            return _breakfastByCompanyRepository.GetBreakfastByCompany(companyName);
+        }
+
+        public IList<BreakfastByCompany> GetBreakfastByCompanyAndDate(string companyName, LocalDate date)
+        {
+            return _breakfastByCompanyRepository.GetBreakfastByCompanyAndDate(companyName, date);
+        }
+
+        public void AddBreakfastByCompany(BreakfastByCompany breakfastByCompany)
+        {
+            _breakfastByCompanyRepository.AddBreakfastByCompany(breakfastByCompany);
+        }
+
+        public void DeleteBreakfastByCompany(string companyName, LocalDate date, string staffUsername)
+        {
+            _breakfastByCompanyRepository.DeleteBreakfastByCompany(companyName, date, staffUsername);
         }
     }
 }
