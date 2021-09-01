@@ -1,5 +1,4 @@
 ﻿using Cassandra;
-using PlanIT.DataAccess;
 using PlanIT.DataAccess.Constants;
 using PlanIT.DataAccess.Models;
 using PlanIT.Repository.Constants;
@@ -86,6 +85,14 @@ namespace PlanIT.Repository.Mappings
                 .Column(a => a.EndDateTime, cm => cm.WithName(ReservedMeetingRoomColumns.EndDateTime).WithDbType<DateTimeOffset>()).CaseSensitive()
                 .Column(a => a.StaffUsernameWhoReserved, cm => cm.WithName(ReservedMeetingRoomColumns.StaffUsernameWhoReserved).WithDbType<string>()).CaseSensitive()
                 .Column(a => a.NumberOfSeatsUsed, cm => cm.WithName(ReservedMeetingRoomColumns.NumberOfSeatsUsed).WithDbType<int>()).CaseSensitive();
+
+            For<AvailableBreakfastByCompany>()
+                .TableName(DatabaseNames.AvailableBreakfastByCompany).CaseSensitive()
+                .PartitionKey(a => a.CompanyName)
+                .ClusteringKey(a => a.Date)
+                .Column(a => a.CompanyName, cm => cm.WithName(AvailableBreakfastByCompanyColumns.CompanyName).WithDbType<string>()).CaseSensitive()
+                .Column(a => a.Date, cm => cm.WithName(AvailableBreakfastByCompanyColumns.Date).WithDbType<LocalDate>()).CaseSensitive()
+                .Column(a => a.BreakfastItems, cm => cm.WithName(AvailableBreakfastByCompanyColumns.BreakfastItems).WithDbType<IList<string>>()).CaseSensitive();
         }
     }
 }

@@ -59,6 +59,9 @@ namespace PlanIT.Api
             services.AddScoped<IAllowedNumberInMeetingRoom, CovidAllowedNumberInMeetingRoom>();
             services.AddScoped<IMeetingRoomService, MeetingRoomService>();
 
+            services.AddScoped<IAvailableBreakfastByCompanyRepository, AvailableBreakfastByCompanyRepository>();
+            services.AddScoped<IBreakfastService, BreakfastService>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
