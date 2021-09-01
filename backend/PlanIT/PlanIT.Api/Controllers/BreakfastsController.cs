@@ -228,5 +228,21 @@ namespace PlanIT.Api.Controllers
                 return BadRequest(ex.ToString());
             }
         }
+
+        [HttpPost]
+        [Route("breakfasts/actions/add-for-date")]
+        public ActionResult AddBreakfastForDate([FromBody] AddBreakfastForDateRequest request)
+        {
+            try
+            {
+                _breakfastService.AddBreakfastForDate(request.StaffUsername, request.Date, request.BreakfastItems);
+
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
     }
 }

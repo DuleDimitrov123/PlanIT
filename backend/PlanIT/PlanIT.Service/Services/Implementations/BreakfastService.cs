@@ -1,8 +1,11 @@
 ﻿using Cassandra;
 using PlanIT.DataAccess.Models;
 using PlanIT.Repository.Repositories.Contracts;
+using PlanIT.Service.BusinessLogic;
 using PlanIT.Service.Services.Contracts;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PlanIT.Service.Services.Implementations
 {
@@ -12,13 +15,17 @@ namespace PlanIT.Service.Services.Implementations
         private readonly IBreakfastByStaffRepository _breakfastByStaffRepository;
         private readonly IBreakfastByCompanyRepository _breakfastByCompanyRepository;
 
+        private readonly IStaffService _staffService;
+
         public BreakfastService(IAvailableBreakfastByCompanyRepository availableBreakfastByCompanyRepository,
             IBreakfastByStaffRepository breakfastByStaffRepository,
-            IBreakfastByCompanyRepository breakfastByCompanyRepository)
+            IBreakfastByCompanyRepository breakfastByCompanyRepository,
+            IStaffService staffService)
         {
             _availableBreakfastByCompanyRepository = availableBreakfastByCompanyRepository;
             _breakfastByStaffRepository = breakfastByStaffRepository;
             _breakfastByCompanyRepository = breakfastByCompanyRepository;
+            _staffService = staffService;
         }
 
         public IList<AvailableBreakfastByCompany> GetAllAvailableBreakfast()
@@ -99,6 +106,62 @@ namespace PlanIT.Service.Services.Implementations
         public void DeleteBreakfastByCompany(string companyName, LocalDate date, string staffUsername)
         {
             _breakfastByCompanyRepository.DeleteBreakfastByCompany(companyName, date, staffUsername);
+        }
+
+        public void AddBreakfastForDate(string staffUsername, LocalDate date, IList<string> breakfastItems)
+        {
+            //get my company
+            var company = _staffService.GetStaffByUsername(staffUsername).CompanyName;
+
+            if (string.IsNullOrEmpty(company))
+            {
+                throw new Exception($"{staffUsername} doesn't have company!");
+            }
+
+            //check if that breakfast exists in company for date
+            var allBreakfasts = GetAvailableBreakfastByCompanyAndDate(company, date);
+
+            if (allBreakfasts.Count() == 0)
+            {
+                throw new Exception($"Your company doesn't provide breakfasts!");
+            }
+
+            var notAvailable = new List<string>();
+            var available = new List<string>();
+            foreach (var item in breakfastItems)
+            {
+                if (!allBreakfasts.Contains(item))
+                {
+                    notAvailable.Add(item);
+                }
+                else
+                {
+                    available.Add(item);
+                }
+            }
+
+            if (available.Count() != 0)
+            {
+                AddBreakfastByCompany(new BreakfastByCompany
+                {
+                    CompanyName = company,
+                    Date = date,
+                    StaffUsername = staffUsername,
+                    BreakfastItems = available
+                });
+
+                AddBreakfastByStaff(new BreakfastByStaff
+                {
+                    StaffUsername = staffUsername,
+                    Date = date,
+                    BreakfastItems = available
+                });
+            }
+
+            if (notAvailable.Count() != 0)
+            {
+                throw new NotAvailableBreakfastItemsException(notAvailable);
+            }
         }
     }
 }

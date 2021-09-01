@@ -37,5 +37,7 @@ namespace PlanIT.Service.Services.Contracts
         void AddBreakfastByCompany(BreakfastByCompany breakfastByCompany);
 
         void DeleteBreakfastByCompany(string companyName, LocalDate date, string staffUsername);
+
+        void AddBreakfastForDate(string staffUsername, LocalDate date, IList<string> breakfastItems);
     }
 }
