@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PlanIT.DataAccess.Models;
 using PlanIT.Service.Services.Contracts;
@@ -10,7 +11,8 @@ using static PlanIT.Api.Models.BreakfastModels;
 
 namespace PlanIT.Api.Controllers
 {
-    //[Route("[controller]")]
+    [Route("[controller]")]
+    [Authorize]
     [ApiController]
     public class BreakfastsController : ControllerBase
     {
