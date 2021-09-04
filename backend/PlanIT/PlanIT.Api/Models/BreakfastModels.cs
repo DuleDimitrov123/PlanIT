@@ -18,5 +18,7 @@ namespace PlanIT.Api.Models
         public record GetBreakfastByCompanyAndDateRequest(string CompanyName, LocalDate Date);
 
         public record AddBreakfastForDateRequest(string StaffUsername, LocalDate Date, IList<string> BreakfastItems);
+
+        public record DeleteBreakfastForDateRequest(string StaffUsername, LocalDate Date);
     }
 }

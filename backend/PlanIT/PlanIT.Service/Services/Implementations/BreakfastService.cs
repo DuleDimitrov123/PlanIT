@@ -163,5 +163,22 @@ namespace PlanIT.Service.Services.Implementations
                 throw new NotAvailableBreakfastItemsException(notAvailable);
             }
         }
+
+        public void DeleteBreakfastForDate(string staffUsername, LocalDate date)
+        {
+            //get my company
+            var company = _staffService.GetStaffByUsername(staffUsername).CompanyName;
+
+            if (string.IsNullOrEmpty(company))
+            {
+                throw new Exception($"{staffUsername} doesn't have company!");
+            }
+
+            //delete breakfast by staff
+            DeleteBreakfastByStaffAndDate(staffUsername, date);
+
+            //delete breakfast by company
+            DeleteBreakfastByCompany(company, date, staffUsername);
+        }
     }
 }

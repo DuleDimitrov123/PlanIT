@@ -244,5 +244,21 @@ namespace PlanIT.Api.Controllers
                 return BadRequest(ex.ToString());
             }
         }
+
+        [HttpPost]
+        [Route("breakfasts/actions/delete-for-date")]
+        public ActionResult DeleteBreakfastForDate([FromBody] DeleteBreakfastForDateRequest request)
+        {
+            try
+            {
+                _breakfastService.DeleteBreakfastForDate(request.StaffUsername, request.Date);
+
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
     }
 }

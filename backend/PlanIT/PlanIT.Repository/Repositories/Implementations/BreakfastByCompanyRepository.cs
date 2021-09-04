@@ -85,6 +85,7 @@ namespace PlanIT.Repository.Repositories.Implementations
             IMapper mapper = new Mapper(session);
             string query = $"WHERE \"{BreakfastByCompanyColumns.CompanyName}\" = ?";
             IList<object> args = new List<object>();
+            args.Add(companyName);
             if(date != null)
             {
                 query += $" AND \"{BreakfastByCompanyColumns.Date}\" = ?";
