@@ -11,7 +11,6 @@ using static PlanIT.Api.Models.BreakfastModels;
 
 namespace PlanIT.Api.Controllers
 {
-    [Route("[controller]")]
     [Authorize]
     [ApiController]
     public class BreakfastsController : ControllerBase

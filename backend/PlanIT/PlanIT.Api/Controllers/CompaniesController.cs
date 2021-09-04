@@ -8,7 +8,6 @@ using System.Collections.Generic;
 namespace PlanIT.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     [Authorize]
     public class CompaniesController : ControllerBase
     {

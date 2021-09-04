@@ -9,7 +9,6 @@ using static PlanIT.Api.Models.TypeOfWorkModels;
 namespace PlanIT.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     [Authorize]
     public class TypeOfWorkController : ControllerBase
     {
