@@ -6,7 +6,6 @@ using static PlanIT.Api.Models.LoginModels;
 
 namespace PlanIT.Api.Controllers
 {
-    [Route("[controller]")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {

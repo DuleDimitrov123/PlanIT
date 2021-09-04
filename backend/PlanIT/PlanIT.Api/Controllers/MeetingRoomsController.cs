@@ -12,7 +12,6 @@ using static PlanIT.Api.Models.MeetingRoomModels;
 
 namespace PlanIT.Api.Controllers
 {
-    [Route("[controller]")]
     [ApiController]
     [Authorize]
     public class MeetingRoomsController : ControllerBase

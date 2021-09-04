@@ -12,7 +12,6 @@ using static PlanIT.Api.Models.StaffModels;
 namespace PlanIT.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     [Authorize]
     public class StaffController : ControllerBase
     {

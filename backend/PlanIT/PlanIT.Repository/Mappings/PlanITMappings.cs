@@ -1,5 +1,4 @@
 ﻿using Cassandra;
-using PlanIT.DataAccess;
 using PlanIT.DataAccess.Constants;
 using PlanIT.DataAccess.Models;
 using PlanIT.Repository.Constants;
@@ -86,6 +85,32 @@ namespace PlanIT.Repository.Mappings
                 .Column(a => a.EndDateTime, cm => cm.WithName(ReservedMeetingRoomColumns.EndDateTime).WithDbType<DateTimeOffset>()).CaseSensitive()
                 .Column(a => a.StaffUsernameWhoReserved, cm => cm.WithName(ReservedMeetingRoomColumns.StaffUsernameWhoReserved).WithDbType<string>()).CaseSensitive()
                 .Column(a => a.NumberOfSeatsUsed, cm => cm.WithName(ReservedMeetingRoomColumns.NumberOfSeatsUsed).WithDbType<int>()).CaseSensitive();
+
+            For<AvailableBreakfastByCompany>()
+                .TableName(DatabaseNames.AvailableBreakfastByCompany).CaseSensitive()
+                .PartitionKey(a => a.CompanyName)
+                .ClusteringKey(a => a.Date)
+                .Column(a => a.CompanyName, cm => cm.WithName(AvailableBreakfastByCompanyColumns.CompanyName).WithDbType<string>()).CaseSensitive()
+                .Column(a => a.Date, cm => cm.WithName(AvailableBreakfastByCompanyColumns.Date).WithDbType<LocalDate>()).CaseSensitive()
+                .Column(a => a.BreakfastItems, cm => cm.WithName(AvailableBreakfastByCompanyColumns.BreakfastItems).WithDbType<IList<string>>()).CaseSensitive();
+
+            For<BreakfastByStaff>()
+                .TableName(DatabaseNames.BreakfastByStaff).CaseSensitive()
+                .PartitionKey(b => b.StaffUsername)
+                .ClusteringKey(b => b.Date)
+                .Column(b => b.StaffUsername, cm => cm.WithName(BreakfastByStaffColumns.StaffUsername).WithDbType<string>()).CaseSensitive()
+                .Column(b => b.Date, cm => cm.WithName(BreakfastByStaffColumns.Date).WithDbType<LocalDate>()).CaseSensitive()
+                .Column(b => b.BreakfastItems, cm => cm.WithName(BreakfastByStaffColumns.BreakfastItems).WithDbType<IList<string>>()).CaseSensitive();
+
+            For<BreakfastByCompany>()
+                .TableName(DatabaseNames.BreakfastByCompany).CaseSensitive()
+                .PartitionKey(b => b.CompanyName)
+                .ClusteringKey(b => b.Date)
+                .ClusteringKey(b => b.StaffUsername)
+                .Column(b => b.CompanyName, cm => cm.WithName(BreakfastByCompanyColumns.CompanyName).WithDbType<string>()).CaseSensitive()
+                .Column(b => b.Date, cm => cm.WithName(BreakfastByCompanyColumns.Date).WithDbType<LocalDate>()).CaseSensitive()
+                .Column(b => b.StaffUsername, cm => cm.WithName(BreakfastByCompanyColumns.StaffUsername).WithDbType<string>()).CaseSensitive()
+                .Column(b => b.BreakfastItems, cm => cm.WithName(BreakfastByCompanyColumns.BreakfastItems).WithDbType<IList<string>>()).CaseSensitive();
         }
     }
 }

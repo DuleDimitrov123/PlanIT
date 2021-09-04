@@ -47,6 +47,7 @@ namespace PlanIT.Api
             services.AddScoped<ICheckWorkingFromOffice, CovidCheckWorkingFromOffice>();
             services.AddScoped<ITypeOfWorkByStaffAndDateRepository, TypeOfWorkByStaffAndDateRepository>();
             services.AddScoped<ITypeOfWorkByCompanyRepository, TypeOfWorkByCompanyRepository>();
+            services.AddScoped<IBreakfastByCompanyRepository, BreakfastByCompanyRepository>();
             services.AddScoped<ITypeOfWorkService, TypeOfWorkService>();
             //services.AddTransient<ICompanyService, CompanyService>();
 
@@ -58,6 +59,10 @@ namespace PlanIT.Api
             services.AddScoped<IReservedMeetingRoomRepository, ReservedMeetingRoomRepository>();
             services.AddScoped<IAllowedNumberInMeetingRoom, CovidAllowedNumberInMeetingRoom>();
             services.AddScoped<IMeetingRoomService, MeetingRoomService>();
+
+            services.AddScoped<IAvailableBreakfastByCompanyRepository, AvailableBreakfastByCompanyRepository>();
+            services.AddScoped<IBreakfastByStaffRepository, BreakfastByStaffRepository>();
+            services.AddScoped<IBreakfastService, BreakfastService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
