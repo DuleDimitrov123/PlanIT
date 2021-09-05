@@ -175,6 +175,7 @@ namespace PlanIT.Api.Controllers
 
         [HttpGet]
         [Route("staff/actions/staff-by-company/{companyName}")]
+        [AllowAnonymous]
         public ActionResult<List<StaffByCompanyRequestResponse>> GetStaffByCompany([FromRoute(Name = "companyName")] string companyName)
         {
             try
