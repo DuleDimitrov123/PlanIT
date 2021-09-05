@@ -36,7 +36,8 @@ namespace PlanIT.Api.Controllers
         }
 
         [HttpGet]
-        [Route("company/{companyName}")]
+        [Route("companies/{companyName}")]
+        [AllowAnonymous]
         public ActionResult<CompanyBO> GetCompanyByName([FromRoute(Name = "companyName")] string companyName)
         {
             try
@@ -53,6 +54,7 @@ namespace PlanIT.Api.Controllers
 
         [HttpPost]
         [Route("companies")]
+        [AllowAnonymous]
         public ActionResult CreateCompany([FromBody] CompanyBO companyBO)
         {
             try

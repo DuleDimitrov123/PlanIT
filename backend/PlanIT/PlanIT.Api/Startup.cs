@@ -85,6 +85,8 @@ namespace PlanIT.Api
                     }
                 });
             });
+
+            ConfigureCors(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -100,6 +102,8 @@ namespace PlanIT.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("CORS");
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -141,6 +145,17 @@ namespace PlanIT.Api
 
                 //StaffCanCreate can access everything that NormalStaff can, but also some creational things ("StaffCanCreate")
                 cfg.AddPolicy("StaffCanCreate", policy => policy.RequireClaim("Staff", "StaffCanCreate"));
+            });
+        }
+
+        private void ConfigureCors(IServiceCollection services)
+        {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CORS", builder =>
+                {
+                    builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod();
+                });
             });
         }
     }
