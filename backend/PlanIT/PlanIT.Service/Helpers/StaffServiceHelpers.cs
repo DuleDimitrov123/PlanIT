@@ -1,4 +1,5 @@
 ﻿using PlanIT.DataAccess.Models;
+using PlanIT.Repository.Helpers;
 using PlanIT.Service.BusinessObjects;
 
 namespace PlanIT.Service.Helpers
@@ -13,7 +14,7 @@ namespace PlanIT.Service.Helpers
                 Password = staffBO.Password,
                 FirstName = staffBO.FirstName,
                 LastName = staffBO.LastName,
-                DateOfBirth = staffBO.DateOfBirth,
+                DateOfBirth = GeneralHelpers.ConvertDateTimeToLocalDate(staffBO.DateOfBirth),
                 CompanyName = staffBO.CompanyName,
                 Position = staffBO.Position,
                 CanCreate = staffBO.CanCreate
@@ -28,7 +29,7 @@ namespace PlanIT.Service.Helpers
                 Password = staff.Password,
                 FirstName = staff.FirstName,
                 LastName = staff.LastName,
-                DateOfBirth = staff.DateOfBirth,
+                DateOfBirth = GeneralHelpers.ConvertLocalDateToDateTime(staff.DateOfBirth),
                 CompanyName = staff.CompanyName,
                 Position = staff.Position,
                 CanCreate = staff.CanCreate

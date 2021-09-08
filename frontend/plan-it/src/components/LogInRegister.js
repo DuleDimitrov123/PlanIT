@@ -6,7 +6,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Spinner from './Spinner.js'
-import { postRequest } from '../services/postRequest2.js'
 import * as urlConstants from '../constants/urlConstants'
 import * as exceptionConstants from '../constants/exceptionConstants.js'
 
@@ -51,6 +50,12 @@ function LogInRegister() {
             {
                 const data = await response.json();
                 const token = data.token;
+
+                //first remove other info from localStorage
+                localStorage.removeItem("loginToken");
+                localStorage.removeItem("username");
+                localStorage.removeItem("companyName");
+
                 localStorage.setItem("loginToken", token);
                 localStorage.setItem("username", logInUsername);
                 window.location.replace(`/profile/${logInUsername}`);
@@ -58,24 +63,6 @@ function LogInRegister() {
         }
         catch (ex) {
         }
-
-        /*const {data:response, errorMessage:errorMessage} = await postRequest(logInRequest, url);
-        if(errorMessage!='')
-        {
-            if(errorMessage.includes(exceptionConstants.INCORRECT_USERNAME_OR_PASSWORD))
-            {
-                setErrorMessageLogIn(exceptionConstants.INCORRECT_USERNAME_OR_PASSWORD);
-            }
-        }
-        else
-        {
-            const data = await response.json();
-            const token = data.token;
-            localStorage.setItem("loginToken", token);
-            localStorage.setItem("username", logInUsername);
-            window.location.reload();
-        }*/
-
 
     };
 
@@ -116,9 +103,16 @@ function LogInRegister() {
                 {
                     const data = await response.json();
                     const token = data.token;
+                    
+                    //first remove other info from localStorage
+                    localStorage.removeItem("loginToken");
+                    localStorage.removeItem("username");
+                    localStorage.removeItem("companyName");
+
                     localStorage.setItem("loginToken", token);
-                    localStorage.setItem("username", logInUsername);
-                    window.location.replace(`/profile/${registerUsername}`);
+                    localStorage.setItem("username", registerUsername);
+                    //window.location.replace(`/profile/${registerUsername}`);
+                    window.location.replace(`/companies/${registerUsername}`);
                 }
             }
             catch (ex) {

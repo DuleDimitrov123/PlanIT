@@ -11,3 +11,7 @@ export const CREATE_COMPANY = "/companies";
 export const LOG_IN = "/log-in";
 
 export const REGISTER = "/register";
+
+export const GET_STAFF_BY_USERNAME = "/staff/";
+
+export const UPDATE_STAFF_BY_USERNAME = "/staff/";

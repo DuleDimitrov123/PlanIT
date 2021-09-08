@@ -1,4 +1,5 @@
 ﻿using PlanIT.DataAccess.Models;
+using PlanIT.Repository.Helpers;
 using PlanIT.Repository.Repositories.Contracts;
 using PlanIT.Service.BusinessObjects;
 using PlanIT.Service.Helpers;
@@ -40,7 +41,7 @@ namespace PlanIT.Service.Services.Implementations
         {
             var staff = _staffRepository.GetStaffByUsername(username);
 
-            if(staff == null)
+            if (staff == null)
             {
                 return null;
             }
@@ -70,7 +71,7 @@ namespace PlanIT.Service.Services.Implementations
             }
         }
 
-        public void UpdateStaff(string username, string firstName, string lastName, DateTime dateOfBirth, string position)
+        public void UpdateStaff(string username, string firstName, string lastName, DateTime dateOfBirth, string position, string companyName)
         {
             StaffBO staffBO = GetStaffByUsername(username);
             if (!string.IsNullOrEmpty(firstName))
@@ -85,13 +86,19 @@ namespace PlanIT.Service.Services.Implementations
 
             if (!dateOfBirth.Equals(DateTime.MinValue))
             {
-                staffBO.DateOfBirth = new Cassandra.LocalDate(dateOfBirth.Year, dateOfBirth.Month, dateOfBirth.Day);
+                staffBO.DateOfBirth = dateOfBirth;
             }
 
             if (!string.IsNullOrEmpty(position))
             {
                 staffBO.Position = position;
                 ChangeStaffPosition(staffBO.CompanyName, staffBO.Username, position);
+            }
+
+            //You can only change companyName if it is not entered at the beginning and if you try to enter something valid
+            if(string.IsNullOrEmpty(staffBO.CompanyName) && !string.IsNullOrEmpty(companyName))
+            {
+                staffBO.CompanyName = companyName;
             }
 
             _staffRepository.UpdateStaff(

@@ -14,7 +14,7 @@ namespace PlanIT.Service.Services.Contracts
 
         void CreateStaff(StaffBO staffBO);
 
-        void UpdateStaff(string username, string firstName, string lastName, DateTime dateOfBirth, string position);
+        void UpdateStaff(string username, string firstName, string lastName, DateTime dateOfBirth, string position, string companyName);
 
         void DeleteStaffByUsername(string username);
 

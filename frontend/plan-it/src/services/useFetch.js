@@ -9,7 +9,19 @@ export default function useFetch(url) {
     useEffect(() => {
         async function init() {
             try {
-                const response = await fetch(urlConstants.BASE_URL + url);
+                let partForToken = '';
+                const token = localStorage.getItem("loginToken");
+                if(token!=null && token!=undefined)
+                {
+                    partForToken = "Bearer "+token;
+                }
+                
+                const response = await fetch(urlConstants.BASE_URL + url,{
+                    method:"GET",
+                    headers:{"Content-Type":"application/json",
+                    "Authorization":partForToken
+                   },
+                });
                 if (response.ok) {
                     const json = await response.json();
                     setData(json);

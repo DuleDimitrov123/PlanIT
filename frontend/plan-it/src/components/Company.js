@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { useParams, Link } from "react-router-dom";
 import Spinner from '../components/Spinner.js';
 import useFetch from '../services/useFetch.js';
