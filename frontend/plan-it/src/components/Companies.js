@@ -7,7 +7,6 @@ import { useParams, Link } from "react-router-dom";
 import CreateCompany from './CreateCompany'
 
 function Companies() {
-    const { username } = useParams();
     const { data: companies, loading: loading, error: error } = useFetch(urlConstants.COMPANIES);
     const [showSpinner, setShowSpinner] = useState(false);
     let companyName = localStorage.getItem("companyName");

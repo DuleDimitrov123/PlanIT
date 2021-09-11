@@ -10,8 +10,9 @@ import * as urlConstants from '../constants/urlConstants'
 import * as exceptionConstants from '../constants/exceptionConstants.js'
 
 
-function LogInRegister() {
-    const [open, setOpen] = useState(false);
+function LogInRegister({isOpen}) {
+    console.log(isOpen);
+    const [open, setOpen] = useState(isOpen !== null && isOpen !== undefined ? isOpen : false);
     const [logInUsername, setLogInUsername] = useState("");
     const [logInPassword, setLogInPassword] = useState("");
     const [errorMessageUsernameLogIn, setErrorMessageUsernameLogIn] = useState("");

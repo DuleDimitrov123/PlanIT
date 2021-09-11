@@ -25,7 +25,13 @@ export default function useFetch(url) {
                 if (response.ok) {
                     const json = await response.json();
                     setData(json);
-                } else {
+                } else if (response.status === 401){
+                    localStorage.removeItem("loginToken");
+                    localStorage.removeItem("username");
+                    localStorage.removeItem("companyName");
+    
+                    window.location.replace("/logIn");
+                }else {
                     throw response;
                 }
             } catch (e) {
