@@ -52,7 +52,9 @@ namespace PlanIT.Repository.Repositories.Implementations
             }
 
             IMapper mapper = new Mapper(session);
-            var typeOfWork = mapper.Single<TypeOfWorkByStaffAndDate>($"WHERE \"{TypeOfWorkByStaffAndDateColumns.StaffUsername}\" = ? AND \"{TypeOfWorkByStaffAndDateColumns.Date}\" = ?", staffUsername, date);
+            //var typeOfWork = mapper.Single<TypeOfWorkByStaffAndDate>($"WHERE \"{TypeOfWorkByStaffAndDateColumns.StaffUsername}\" = ? AND \"{TypeOfWorkByStaffAndDateColumns.Date}\" = ?", staffUsername, date);
+
+            var typeOfWork = mapper.Fetch<TypeOfWorkByStaffAndDate>($"WHERE \"{TypeOfWorkByStaffAndDateColumns.StaffUsername}\" = ? AND \"{TypeOfWorkByStaffAndDateColumns.Date}\" = ?", staffUsername, date).FirstOrDefault();
 
             return typeOfWork?.TypeOfWork;
         }

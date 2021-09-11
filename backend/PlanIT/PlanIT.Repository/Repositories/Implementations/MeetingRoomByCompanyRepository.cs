@@ -52,9 +52,13 @@ namespace PlanIT.Repository.Repositories.Implementations
             }
 
             IMapper mapper = new Mapper(session);
-            MeetingRoomByCompany mr = mapper.Single<MeetingRoomByCompany>(
+            /*MeetingRoomByCompany mr = mapper.Single<MeetingRoomByCompany>(
                 $"WHERE \"{MeetingRoomByCompanyColumns.CompanyName}\" = ? AND \"{MeetingRoomByCompanyColumns.MeetingRoom}\" = ?",
-                companyName, meetingRoom);
+                companyName, meetingRoom);*/
+
+            MeetingRoomByCompany mr = mapper.Fetch<MeetingRoomByCompany>(
+                $"WHERE \"{MeetingRoomByCompanyColumns.CompanyName}\" = ? AND \"{MeetingRoomByCompanyColumns.MeetingRoom}\" = ?",
+                companyName, meetingRoom).FirstOrDefault();
 
             return mr;
         }

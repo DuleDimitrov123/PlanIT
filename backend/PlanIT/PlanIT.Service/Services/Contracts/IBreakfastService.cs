@@ -1,5 +1,6 @@
 ﻿using Cassandra;
 using PlanIT.DataAccess.Models;
+using System;
 using System.Collections.Generic;
 
 namespace PlanIT.Service.Services.Contracts
@@ -10,11 +11,11 @@ namespace PlanIT.Service.Services.Contracts
 
         IList<AvailableBreakfastByCompany> GetAvailableBreakfastByCompany(string companyName);
 
-        IList<string> GetAvailableBreakfastByCompanyAndDate(string companyName, LocalDate date);
+        IList<string> GetAvailableBreakfastByCompanyAndDate(string companyName, DateTime date);
 
-        void AddAvailableBreakfastByCompany(AvailableBreakfastByCompany availableBreakfastByCompany);
+        void AddAvailableBreakfastByCompany(string companyName, IList<string> breakfastItems, DateTime date);
 
-        void AddSameBreakfastForDateInterval(string companyName, IList<string> breakfastItems, LocalDate startDate, LocalDate endDate);
+        void AddSameBreakfastForDateInterval(string companyName, IList<string> breakfastItems, DateTime startDate, DateTime endDate);
 
         void UpdateAvailableBreakfastByCompany(string companyName, LocalDate date, IList<string> newBreakfastItems, bool add);
 
@@ -22,7 +23,7 @@ namespace PlanIT.Service.Services.Contracts
 
         IList<BreakfastByStaff> GetBreakfastByStaff(string staffUsername);
 
-        IList<string> GetBreakfastByStaffAndDate(string staffUsername, LocalDate date);
+        IList<string> GetBreakfastByStaffAndDate(string staffUsername, DateTime date);
 
         void AddBreakfastByStaff(BreakfastByStaff breakfastByStaff);
 
@@ -32,13 +33,13 @@ namespace PlanIT.Service.Services.Contracts
 
         IList<BreakfastByCompany> GetBreakfastByCompany(string companyName);
 
-        IList<BreakfastByCompany> GetBreakfastByCompanyAndDate(string companyName, LocalDate date);
+        IList<BreakfastByCompany> GetBreakfastByCompanyAndDate(string companyName, DateTime date);
 
         void AddBreakfastByCompany(BreakfastByCompany breakfastByCompany);
 
         void DeleteBreakfastByCompany(string companyName, LocalDate date, string staffUsername);
 
-        void AddBreakfastForDate(string staffUsername, LocalDate date, IList<string> breakfastItems);
+        void AddBreakfastForDate(string staffUsername, DateTime date, IList<string> breakfastItems);
 
         void DeleteBreakfastForDate(string staffUsername, LocalDate date);
     }
