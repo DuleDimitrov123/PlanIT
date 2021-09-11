@@ -7,6 +7,7 @@ import NavBar from './components/NavBar.js';
 import Profile from './components/Profile';
 import TypeOfWork from './components/TypeOfWork';
 import LogInRegister from './components/LogInRegister';
+import Error from './components/Error';
 
 function App() {
   return (
@@ -31,6 +32,10 @@ function App() {
 
         <Route exact path="/logIn">
           <LogInRegister isOpen={true}/>
+        </Route>
+
+        <Route path="*">
+          <Error/>
         </Route>
       </Switch>
     </Router>

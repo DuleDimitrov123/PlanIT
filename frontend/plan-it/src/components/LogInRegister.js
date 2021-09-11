@@ -113,7 +113,7 @@ function LogInRegister({isOpen}) {
                     localStorage.setItem("loginToken", token);
                     localStorage.setItem("username", registerUsername);
                     //window.location.replace(`/profile/${registerUsername}`);
-                    window.location.replace(`/companies/${registerUsername}`);
+                    window.location.replace("/companies");
                 }
             }
             catch (ex) {

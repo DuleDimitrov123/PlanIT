@@ -7,6 +7,7 @@ import '../App.css'
 import * as urlConstants from '../constants/urlConstants'
 import * as generalConstants from '../constants/generalConstants'
 import * as generalHelpers from '../services/generalHelpers'
+import Error from './Error';
 
 function TypeOfWorkByStaff() {
     const [startDate, setStartDate] = useState(new Date());
@@ -15,7 +16,7 @@ function TypeOfWorkByStaff() {
 
     const { data: typeOfWork, loading: loading, error: error } = useFetch(urlConstants.GET_TYPE_OF_WORK_BY_STAFF + localStorage.getItem("username"));
 
-    if (error) throw error;
+    if (error) return <Error/>;
     if (loading) return <Spinner />
 
     const filteredTypeOfWork=[];
