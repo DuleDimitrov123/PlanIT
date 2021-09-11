@@ -1,4 +1,4 @@
-﻿using Cassandra;
+﻿using System;
 
 namespace PlanIT.Service.BusinessObjects
 {
@@ -6,7 +6,7 @@ namespace PlanIT.Service.BusinessObjects
     {
         public string StaffUsername { get; set; }
 
-        public LocalDate Date { get; set; }
+        public DateTime Date { get; set; }
 
         public string TypeOfWork { get; set; }
     }

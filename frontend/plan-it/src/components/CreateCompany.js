@@ -26,7 +26,7 @@ function CreateCompany() {
         setOpen(false);
     };
 
-    const handleCreateNewCompany = () => {
+    async function handleCreateNewCompany() {
         setOpen(false);
         setShowSpinner(true);
 
@@ -38,10 +38,9 @@ function CreateCompany() {
             description: description,
             numberOfWorkplaces: numberOfWorkplaces
         };
-        console.log(urlConstants.BASE_URL + urlConstants.CREATE_COMPANY);
         postRequest(company, urlConstants.BASE_URL + urlConstants.CREATE_COMPANY);
 
-        window.location.reload();
+        window.location.reload("/companies");
     };
 
     return (

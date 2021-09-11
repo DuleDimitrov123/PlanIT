@@ -1,4 +1,5 @@
 ﻿using Cassandra;
+using System;
 
 namespace PlanIT.Service.BusinessObjects
 {
@@ -12,7 +13,7 @@ namespace PlanIT.Service.BusinessObjects
 
         public string LastName { get; set; }
 
-        public LocalDate DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
         public string CompanyName { get; set; }
 

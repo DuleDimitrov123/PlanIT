@@ -15,15 +15,16 @@ namespace PlanIT.Service.BusinessLogic
         {
             var company = companyService.GetCompanyByName(extendedTypeOfWorkBO.CompanyName);
 
-            if(company == null)
+            if (company == null)
             {
                 throw new Exception($"Company {extendedTypeOfWorkBO.CompanyName} doens't exist!");
             }
 
             var typeOfWork = typeOfWorkService.GetTypeOfWorkByCompanyAndDate(
-                extendedTypeOfWorkBO.CompanyName, GeneralHelpers.ConvertLocalDateToDateTime(extendedTypeOfWorkBO.Date));
+                extendedTypeOfWorkBO.CompanyName, extendedTypeOfWorkBO.Date);
             var typeOfWorkWFO = typeOfWork.Where(t => t.TypeOfWork == TypesOfWorkConstants.WFO).ToList();
-            double percentageTaken = 100.0 * ((double)typeOfWorkWFO.Count / (double)company.NumberOfWorkplaces);
+            //+ 1 is because with this new staff, percentage taken can't be more than _availablePercentage
+            double percentageTaken = 100.0 * (((double)typeOfWorkWFO.Count + 1.0) / (double)company.NumberOfWorkplaces);
 
             //true-available percentage is more then taken => OK
             //false-available percentage is less then taken => NOT OK

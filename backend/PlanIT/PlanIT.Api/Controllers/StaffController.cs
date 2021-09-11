@@ -81,7 +81,8 @@ namespace PlanIT.Api.Controllers
                     request.FirstName,
                     request.LastName,
                     request.DateOfBirth,
-                    request.Position);
+                    request.Position,
+                    request.CompanyName);
 
                 return Ok();
             }

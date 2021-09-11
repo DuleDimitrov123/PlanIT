@@ -14,11 +14,17 @@ function NavBar() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link>
+{/*                        <Nav.Link>
                             <Link to="/companies">
                                 Companies
                             </Link>
                         </Nav.Link>
+*/}
+                    <Nav.Link>
+                        <Link to="/typeOfWork">
+                            Type of work
+                        </Link>
+                    </Nav.Link>
                         <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                             <NavDropdown.Item>Action</NavDropdown.Item>
                             <NavDropdown.Item>Another action</NavDropdown.Item>
