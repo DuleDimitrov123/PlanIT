@@ -3,7 +3,7 @@ export async function postRequestWithAuthorization(request, url) {
         const token = localStorage.getItem("loginToken");
         if(token!=null && token!=undefined)
         {
-            partForToken = "Bearer "+token;
+            partForToken = "Bearer "+ token;
         }
         let exception = null;
         const response = await fetch(url, {

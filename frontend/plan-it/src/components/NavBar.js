@@ -25,6 +25,13 @@ function NavBar() {
                             Type of work
                         </Link>
                     </Nav.Link>
+
+                    <Nav.Link>
+                        <Link to="/breakfast">
+                            Breakfast
+                        </Link>
+                    </Nav.Link>
+
                         <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                             <NavDropdown.Item>Action</NavDropdown.Item>
                             <NavDropdown.Item>Another action</NavDropdown.Item>
