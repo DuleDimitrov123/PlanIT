@@ -6,6 +6,8 @@ import * as urlConstants from '../constants/urlConstants'
 import Spinner from './Spinner'
 import * as generalHelpers from '../services/generalHelpers'
 import EditProfile from './EditProfile'
+import Error from './Error'
+import jwt_decode from 'jwt-decode'
 
 function Profile() {
     const { username } = useParams();
@@ -28,6 +30,17 @@ function Profile() {
 
     if (error) throw error;
     if (loading) return <Spinner />
+
+    //check if you should visit this page...
+    const token = localStorage.getItem("loginToken");
+    const decodedToken = jwt_decode(token);
+
+    console.log(decodedToken);
+
+    if(decodedToken.Username !== username)
+    {
+      return <Error customMessage={"You can't reach this page!"}/>
+    }
 
     localStorage.setItem("companyName", staff.companyName);
 
@@ -115,7 +128,7 @@ function Profile() {
                       staff.companyName != null ? staff.companyName : 
                         <div>
                           <label>Please choose your company</label>
-                          <Link to={`/companies/${staff.username}`} class="btn btn-primary">See companies</Link>
+                          <Link to={"/companies"} class="btn btn-primary">See companies</Link>
                         </div>
                     }
                     </div>
