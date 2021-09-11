@@ -5,6 +5,7 @@ import * as urlConstants from '../constants/urlConstants'
 import '../App.css'
 import { useParams, Link } from "react-router-dom";
 import CreateCompany from './CreateCompany'
+import Error from './Error'
 
 function Companies() {
     const { data: companies, loading: loading, error: error } = useFetch(urlConstants.COMPANIES);
@@ -51,7 +52,8 @@ function Companies() {
         setShowSpinner(false);
     }
 
-    if (error) throw error;
+    //if (error) throw error;
+    if (error) return <Error/>
     if (loading) return <Spinner />
 
     return (
