@@ -218,7 +218,7 @@ namespace PlanIT.Service.Services.Implementations
             var staff = _staffService.GetStaffByUsername(extendedTypeOfWorkBO.StaffUsername);
             if (staff == null || string.IsNullOrEmpty(staff.CompanyName) || staff.CompanyName != extendedTypeOfWorkBO.CompanyName)
             {
-                throw new Exception($"Staff {staff.Username} doesn't work for {staff.CompanyName}");
+                throw new Exception($"Staff {staff.Username} doesn't work for {extendedTypeOfWorkBO.CompanyName}");
             }
 
             //add type of work by staff and date
