@@ -1,4 +1,5 @@
 ﻿using PlanIT.DataAccess.Models;
+using PlanIT.Repository.Helpers;
 using PlanIT.Service.BusinessObjects;
 
 namespace PlanIT.Service.Helpers
@@ -10,7 +11,7 @@ namespace PlanIT.Service.Helpers
             return new TypeOfWorkBO
             {
                 StaffUsername = typeOfWorkByStaffAndDate.StaffUsername,
-                Date = typeOfWorkByStaffAndDate.Date,
+                Date = GeneralHelpers.ConvertLocalDateToDateTime(typeOfWorkByStaffAndDate.Date),
                 TypeOfWork = typeOfWorkByStaffAndDate.TypeOfWork
             };
         }
@@ -21,7 +22,7 @@ namespace PlanIT.Service.Helpers
             {
                 CompanyName = typeOfWorkByCompany.CompanyName,
                 StaffUsername = typeOfWorkByCompany.StaffUsername,
-                Date = typeOfWorkByCompany.Date,
+                Date =GeneralHelpers.ConvertLocalDateToDateTime(typeOfWorkByCompany.Date),
                 TypeOfWork = typeOfWorkByCompany.TypeOfWork
             };
         }
@@ -31,7 +32,7 @@ namespace PlanIT.Service.Helpers
             return new TypeOfWorkByStaffAndDate
             {
                 StaffUsername = typeOfWorkBO.StaffUsername,
-                Date = typeOfWorkBO.Date,
+                Date =GeneralHelpers.ConvertDateTimeToLocalDate(typeOfWorkBO.Date),
                 TypeOfWork = typeOfWorkBO.TypeOfWork
             };
         }
@@ -42,7 +43,7 @@ namespace PlanIT.Service.Helpers
             {
                 CompanyName = typeOfWorkBO.CompanyName,
                 StaffUsername = typeOfWorkBO.StaffUsername,
-                Date = typeOfWorkBO.Date,
+                Date = GeneralHelpers.ConvertDateTimeToLocalDate(typeOfWorkBO.Date),
                 TypeOfWork = typeOfWorkBO.TypeOfWork
             };
         }

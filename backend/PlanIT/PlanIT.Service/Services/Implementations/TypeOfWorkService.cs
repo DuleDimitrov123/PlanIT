@@ -75,7 +75,7 @@ namespace PlanIT.Service.Services.Implementations
                     new TypeOfWorkBO
                     {
                         StaffUsername = staffUsername,
-                        Date = new LocalDate(date.Year, date.Month, date.Day),
+                        Date = date,
                         TypeOfWork = typeOfWork
                     }));
         }
@@ -203,7 +203,7 @@ namespace PlanIT.Service.Services.Implementations
 
         public void AddTypeOfWork(ExtendedTypeOfWorkBO extendedTypeOfWorkBO)
         {
-            DateTime dateTime = GeneralHelpers.ConvertLocalDateToDateTime(extendedTypeOfWorkBO.Date);
+            DateTime dateTime = extendedTypeOfWorkBO.Date;
 
             //check if it is possible to work from office
             if (extendedTypeOfWorkBO.TypeOfWork == TypesOfWorkConstants.WFO)
@@ -237,7 +237,7 @@ namespace PlanIT.Service.Services.Implementations
                 var extendedTypeOfWorkBO = new ExtendedTypeOfWorkBO()
                 {
                     CompanyName = companyName,
-                    Date = localDate,
+                    Date = GeneralHelpers.ConvertLocalDateToDateTime(localDate),
                     StaffUsername = staffUsername,
                     TypeOfWork = typeOfWork
                 };
