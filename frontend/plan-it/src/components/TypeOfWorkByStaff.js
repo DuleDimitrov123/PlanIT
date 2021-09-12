@@ -87,8 +87,8 @@ function TypeOfWorkByStaff() {
                             return (
                                 <tr>
                                     <th scope="row">{generalHelpers.DateTimeToDateText(t.date)}</th>
-                                    <td><input type="checkbox" checked={t.typeOfWork ===generalConstants.WFH} disabled={true}/></td>
                                     <td><input type="checkbox" checked={t.typeOfWork ===generalConstants.WFO} disabled={true}/></td>
+                                    <td><input type="checkbox" checked={t.typeOfWork ===generalConstants.WFH} disabled={true}/></td>
                                 </tr>
                             )
                         })}
