@@ -15,8 +15,8 @@ function MyBreakfasts({handleWasAnError}) {
     {
         handleWasAnError();
     }
+    
     if (loading) return <Spinner/>
-
 
     return (
         <div>
