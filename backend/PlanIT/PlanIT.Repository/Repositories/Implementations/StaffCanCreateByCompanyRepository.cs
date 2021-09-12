@@ -37,8 +37,16 @@ namespace PlanIT.Repository.Repositories.Implementations
                 throw new Exception("Database isn't available at the moment, please try again later.");
             }
             IMapper mapper = new Mapper(session);
-            var staffCanCreateByCompany = mapper.Single<StaffCanCreateByCompany>(
-                $"WHERE \"{StaffCanCreateByCompanyColumns.CompanyName}\" = ?", companyName);
+            /*var staffCanCreateByCompany = mapper.Single<StaffCanCreateByCompany>(
+                $"WHERE \"{StaffCanCreateByCompanyColumns.CompanyName}\" = ?", companyName);*/
+
+            var staffCanCreateByCompany = mapper.Fetch<StaffCanCreateByCompany>(
+                $"WHERE \"{StaffCanCreateByCompanyColumns.CompanyName}\" = ?", companyName).FirstOrDefault();
+
+            if(staffCanCreateByCompany == null)
+            {
+                return new List<string>();
+            }
 
             return staffCanCreateByCompany.StaffUsernames;
         }

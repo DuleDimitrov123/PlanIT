@@ -72,11 +72,12 @@ namespace PlanIT.Api.Controllers
 
         [HttpPost]
         [Route("breakfasts/actions/add-available-breakfast")]
-        public ActionResult AddAvailableBreakfastByCompany([FromBody] AvailableBreakfastByCompany availableBreakfastByCompany)
+        [Authorize(Policy = "StaffCanCreate")]
+        public ActionResult AddAvailableBreakfastByCompany([FromBody] AddAvailableBreakfastByCompanyRequest request)
         {
             try
             {
-                _breakfastService.AddAvailableBreakfastByCompany(availableBreakfastByCompany);
+                _breakfastService.AddAvailableBreakfastByCompany(request.CompanyName, request.BreakfastItems, request.Date);
 
                 return Ok();
             }
@@ -88,6 +89,7 @@ namespace PlanIT.Api.Controllers
 
         [HttpPost]
         [Route("breakfasts/actions/add-available-breakfast-for-interval")]
+        [Authorize(Policy = "StaffCanCreate")]
         public ActionResult AddSameBreakfastForDateInterval(AddSameBreakfastForDateIntervalRequest request)
         {
             try

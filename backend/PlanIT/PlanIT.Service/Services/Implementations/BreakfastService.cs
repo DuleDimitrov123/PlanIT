@@ -1,5 +1,6 @@
 ﻿using Cassandra;
 using PlanIT.DataAccess.Models;
+using PlanIT.Repository.Helpers;
 using PlanIT.Repository.Repositories.Contracts;
 using PlanIT.Service.BusinessLogic;
 using PlanIT.Service.Services.Contracts;
@@ -38,14 +39,22 @@ namespace PlanIT.Service.Services.Implementations
             return _availableBreakfastByCompanyRepository.GetAvailableBreakfastByCompany(companyName);
         }
 
-        public IList<string> GetAvailableBreakfastByCompanyAndDate(string companyName, LocalDate date)
+        public IList<string> GetAvailableBreakfastByCompanyAndDate(string companyName, DateTime date)
         {
-            return _availableBreakfastByCompanyRepository.GetAvailableBreakfastByCompanyAndDate(companyName, date);
+            return _availableBreakfastByCompanyRepository.GetAvailableBreakfastByCompanyAndDate(
+                companyName, 
+                GeneralHelpers.ConvertDateTimeToLocalDate(date));
         }
 
-        public void AddAvailableBreakfastByCompany(AvailableBreakfastByCompany availableBreakfastByCompany)
+        public void AddAvailableBreakfastByCompany(string companyName, IList<string> breakfastItems, DateTime date)
         {
-            _availableBreakfastByCompanyRepository.AddAvailableBreakfastByCompany(availableBreakfastByCompany);
+            _availableBreakfastByCompanyRepository.AddAvailableBreakfastByCompany(
+                new AvailableBreakfastByCompany
+                {
+                    CompanyName = companyName,
+                    Date = GeneralHelpers.ConvertDateTimeToLocalDate(date),
+                    BreakfastItems = breakfastItems
+                });
         }
 
         public void UpdateAvailableBreakfastByCompany(string companyName, LocalDate date, IList<string> newBreakfastItems, bool add)
@@ -53,9 +62,13 @@ namespace PlanIT.Service.Services.Implementations
             _availableBreakfastByCompanyRepository.UpdateAvailableBreakfastByCompany(companyName, date, newBreakfastItems, add);
         }
 
-        public void AddSameBreakfastForDateInterval(string companyName, IList<string> breakfastItems, LocalDate startDate, LocalDate endDate)
+        public void AddSameBreakfastForDateInterval(string companyName, IList<string> breakfastItems, DateTime startDate, DateTime endDate)
         {
-            _availableBreakfastByCompanyRepository.AddSameBreakfastForDateInterval(companyName, breakfastItems, startDate, endDate);
+            _availableBreakfastByCompanyRepository.AddSameBreakfastForDateInterval(
+                companyName, 
+                breakfastItems, 
+                GeneralHelpers.ConvertDateTimeToLocalDate(startDate), 
+                GeneralHelpers.ConvertDateTimeToLocalDate(endDate));
         }
 
         public IList<BreakfastByStaff> GettAllBreakfastByStaff()
@@ -68,9 +81,11 @@ namespace PlanIT.Service.Services.Implementations
             return _breakfastByStaffRepository.GetBreakfastByStaff(staffUsername);
         }
 
-        public IList<string> GetBreakfastByStaffAndDate(string staffUsername, LocalDate date)
+        public IList<string> GetBreakfastByStaffAndDate(string staffUsername, DateTime date)
         {
-            return _breakfastByStaffRepository.GetBreakfastByStaffAndDate(staffUsername, date);
+            return _breakfastByStaffRepository.GetBreakfastByStaffAndDate(
+                staffUsername, 
+                GeneralHelpers.ConvertDateTimeToLocalDate(date));
         }
 
         public void AddBreakfastByStaff(BreakfastByStaff breakfastByStaff)
@@ -93,9 +108,11 @@ namespace PlanIT.Service.Services.Implementations
             return _breakfastByCompanyRepository.GetBreakfastByCompany(companyName);
         }
 
-        public IList<BreakfastByCompany> GetBreakfastByCompanyAndDate(string companyName, LocalDate date)
+        public IList<BreakfastByCompany> GetBreakfastByCompanyAndDate(string companyName, DateTime date)
         {
-            return _breakfastByCompanyRepository.GetBreakfastByCompanyAndDate(companyName, date);
+            return _breakfastByCompanyRepository.GetBreakfastByCompanyAndDate(
+                companyName,
+                GeneralHelpers.ConvertDateTimeToLocalDate(date));
         }
 
         public void AddBreakfastByCompany(BreakfastByCompany breakfastByCompany)
@@ -108,7 +125,7 @@ namespace PlanIT.Service.Services.Implementations
             _breakfastByCompanyRepository.DeleteBreakfastByCompany(companyName, date, staffUsername);
         }
 
-        public void AddBreakfastForDate(string staffUsername, LocalDate date, IList<string> breakfastItems)
+        public void AddBreakfastForDate(string staffUsername, DateTime date, IList<string> breakfastItems)
         {
             //get my company
             var company = _staffService.GetStaffByUsername(staffUsername).CompanyName;
@@ -119,7 +136,9 @@ namespace PlanIT.Service.Services.Implementations
             }
 
             //check if that breakfast exists in company for date
-            var allBreakfasts = GetAvailableBreakfastByCompanyAndDate(company, date);
+            var allBreakfasts = GetAvailableBreakfastByCompanyAndDate(
+                company,
+                date);
 
             if (allBreakfasts.Count() == 0)
             {
@@ -145,7 +164,7 @@ namespace PlanIT.Service.Services.Implementations
                 AddBreakfastByCompany(new BreakfastByCompany
                 {
                     CompanyName = company,
-                    Date = date,
+                    Date = GeneralHelpers.ConvertDateTimeToLocalDate(date),
                     StaffUsername = staffUsername,
                     BreakfastItems = available
                 });
@@ -153,7 +172,7 @@ namespace PlanIT.Service.Services.Implementations
                 AddBreakfastByStaff(new BreakfastByStaff
                 {
                     StaffUsername = staffUsername,
-                    Date = date,
+                    Date = GeneralHelpers.ConvertDateTimeToLocalDate(date),
                     BreakfastItems = available
                 });
             }

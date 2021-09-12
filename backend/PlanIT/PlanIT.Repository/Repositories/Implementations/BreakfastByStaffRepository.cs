@@ -52,11 +52,20 @@ namespace PlanIT.Repository.Repositories.Implementations
             }
 
             IMapper mapper = new Mapper(session);
-            BreakfastByStaff breakfastByStaffs = mapper.Single<BreakfastByStaff>(
+            /*BreakfastByStaff breakfastByStaffs = mapper.Single<BreakfastByStaff>(
                 $"WHERE \"{BreakfastByStaffColumns.StaffUsername}\" = ? "+
-                $"AND \"{BreakfastByStaffColumns.Date}\" = ?", staffUsername, date);
+                $"AND \"{BreakfastByStaffColumns.Date}\" = ?", staffUsername, date);*/
 
-            return breakfastByStaffs.BreakfastItems;
+            BreakfastByStaff breakfastByStaff = mapper.Fetch<BreakfastByStaff>(
+                $"WHERE \"{BreakfastByStaffColumns.StaffUsername}\" = ? " +
+                $"AND \"{BreakfastByStaffColumns.Date}\" = ?", staffUsername, date).FirstOrDefault();
+
+            if(breakfastByStaff == null)
+            {
+                return new List<string>();
+            }
+
+            return breakfastByStaff.BreakfastItems;
         }
         public void AddBreakfastByStaff(BreakfastByStaff breakfastByStaff)
         {

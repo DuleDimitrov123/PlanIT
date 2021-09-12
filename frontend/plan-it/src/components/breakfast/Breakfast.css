@@ -1,0 +1,33 @@
+.breakfastDivContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.lowerBreakfastDiv {
+  display: flex;
+  flex-direction: row;
+}
+
+.divForCenterContent {
+  display: flex;
+  justify-content: center;
+}
+
+.addBreakfastsDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.addOneAvailableBreakfastDiv {
+  padding-left: 50px;
+}
+
+.addAvailableBreakfastForIntervalDiv {
+  padding-right: 50px;
+}
+
+.startEndDatePickerDiv {
+  display: flex;
+  flex-direction: row;
+}

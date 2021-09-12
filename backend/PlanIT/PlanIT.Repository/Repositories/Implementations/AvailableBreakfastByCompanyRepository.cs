@@ -54,9 +54,18 @@ namespace PlanIT.Repository.Repositories.Implementations
             }
 
             IMapper mapper = new Mapper(session);
-            var availableBreakfastByCompany = mapper.Single<AvailableBreakfastByCompany>(
+            /*var availableBreakfastByCompany = mapper.Single<AvailableBreakfastByCompany>(
                 $"WHERE \"{AvailableBreakfastByCompanyColumns.CompanyName}\" = ? " +
-                $"AND \"{AvailableBreakfastByCompanyColumns.Date}\" = ?", companyName, date);
+                $"AND \"{AvailableBreakfastByCompanyColumns.Date}\" = ?", companyName, date);*/
+
+            var availableBreakfastByCompany = mapper.Fetch<AvailableBreakfastByCompany>(
+                $"WHERE \"{AvailableBreakfastByCompanyColumns.CompanyName}\" = ? " +
+                $"AND \"{AvailableBreakfastByCompanyColumns.Date}\" = ?", companyName, date).FirstOrDefault();
+
+            if (availableBreakfastByCompany == null)
+            {
+                return new List<string>();
+            }
 
             return availableBreakfastByCompany.BreakfastItems;
         }

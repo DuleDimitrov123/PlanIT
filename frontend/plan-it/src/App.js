@@ -8,6 +8,7 @@ import Profile from './components/Profile';
 import TypeOfWork from './components/TypeOfWork';
 import LogInRegister from './components/LogInRegister';
 import Error from './components/Error';
+import Breakfast from './components/breakfast/Breakfast';
 
 function App() {
   return (
@@ -28,6 +29,10 @@ function App() {
         </Route>
         <Route exact path="/typeOfWork">
           <TypeOfWork/>
+        </Route>
+
+        <Route exact path="/breakfast">
+          <Breakfast/>
         </Route>
 
         <Route exact path="/logIn">
