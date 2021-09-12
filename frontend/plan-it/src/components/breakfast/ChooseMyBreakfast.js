@@ -63,9 +63,12 @@ function ChooseMyBreakfast({handleWasAnError}) {
 
             if(exception !== null)
             {
-                //TODO: use prop...
+                handleWasAnError();
             }
-            window.location.reload();
+            else
+            {
+                window.location.reload();
+            }
         }
         else
         {
