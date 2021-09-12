@@ -28,7 +28,7 @@ function Profile() {
 
     const { data: staff, loading: loading, error: error } = useFetch(urlConstants.GET_STAFF_BY_USERNAME + username);
 
-    if (error) throw error;
+    if (error) return <Error/>;
     if (loading) return <Spinner />
 
     //check if you should visit this page...
