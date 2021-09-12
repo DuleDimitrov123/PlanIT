@@ -4,12 +4,13 @@ import Spinner from '../components/Spinner.js';
 import useFetch from '../services/useFetch.js';
 import * as urlConstants from '../constants/urlConstants'
 import StaffByCompany from './StaffByCompany.js';
+import Error from './Error.js';
 
 function Company() {
     const { companyName } = useParams();
     const { data: company, loading: loading, error: error } = useFetch(urlConstants.COMPANIES_BY_NAME + companyName);
 
-    if (error) throw error;
+    if (error) return <Error/>;
     if (loading) return <Spinner />
 
     return (
