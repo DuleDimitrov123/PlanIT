@@ -6,12 +6,15 @@ import Error from '../Error';
 import * as generalHelpers from '../../services/generalHelpers.js';
 
 
-function MyBreakfasts() {
+function MyBreakfasts({handleWasAnError}) {
     const username = localStorage.getItem("username");
 
     const {data:breakfasts, loading:loading, error:error} = useFetch(urlConstants.GET_BREAKFAST_FOR_USER + username);
 
-    if (error) return <Error/>
+    if (error) 
+    {
+        handleWasAnError();
+    }
     if (loading) return <Spinner/>
 
 
@@ -26,7 +29,7 @@ function MyBreakfasts() {
                     </tr>
                 </thead>
                 <tbody>
-                    {breakfasts.map(b => {
+                    {breakfasts !== null && breakfasts.map(b => {
                         return(
                             <tr>
                                 <th>{generalHelpers.LocalDateToText(b.date)}</th>

@@ -6,7 +6,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { MultiSelect } from "react-multi-select-component";
 
-function ChooseMyBreakfast() {
+function ChooseMyBreakfast({handleWasAnError}) {
     const [date, setDate] = useState(new Date());
     const [breakfast, setBreakfast] = useState([]);
     const [chosenBreakfastLabelValue, setchosenBreakfastLabelValue] = useState([]);
@@ -37,7 +37,7 @@ function ChooseMyBreakfast() {
             }
             else
             {
-                //TODO: use prop...
+                handleWasAnError();
             }
         }
         else

@@ -11,9 +11,14 @@ function Breakfast() {
     const [wasAnError, setWasAnError] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
 
+    const handleWasAnError = () => {
+        setWasAnError(true);  
+        console.log("Handle was an error called");
+    };
+
     if(wasAnError === true)
     {
-        <Error customMessage={errorMessage}/>
+        return <Error customMessage={errorMessage}/>
     }
 
     const username = localStorage.getItem("username");
@@ -53,13 +58,13 @@ function Breakfast() {
                     </ul>
                     <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-choose" role="tabpanel" aria-labelledby="pills-choose-tab">
-                        <ChooseMyBreakfast/>
+                        <ChooseMyBreakfast handleWasAnError={handleWasAnError}/>
                     </div>
                     <div class="tab-pane fade" id="pills-colleagues" role="tabpanel" aria-labelledby="pills-colleagues-tab">
-                        <BreakfastByCompany/>
+                        <BreakfastByCompany handleWasAnError={handleWasAnError}/>
                     </div>
                     <div class="tab-pane fade" id="pills-my-breakfasts" role="tabpanel" aria-labelledby="pills-my-breakfasts-tab">
-                        <MyBreakfasts/>
+                        <MyBreakfasts handleWasAnError={handleWasAnError}/>
                     </div>
                 </div>
             </div>

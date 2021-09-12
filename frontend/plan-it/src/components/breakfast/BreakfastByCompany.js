@@ -6,7 +6,7 @@ import * as ulrConstants from '../../constants/urlConstants';
 import {postRequestWithAuthorization} from '../../services/postRequestWithAuthorization';
 import * as generalHelpers from '../../services/generalHelpers.js';
 
-function BreakfastByCompany() {
+function BreakfastByCompany({handleWasAnError}) {
     const [date, setDate] = useState(new Date());
     const [breakfasts, setBreakfasts] = useState([]);
 
@@ -27,7 +27,7 @@ function BreakfastByCompany() {
         }
         else
         {
-            //TODO: use prop...
+            handleWasAnError();
         }
     }, [date]);
 
