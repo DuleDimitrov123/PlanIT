@@ -1,0 +1,19 @@
+.meetingRoomContainerDiv {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+
+.divForCenterContent {
+  display: flex;
+  justify-content: center;
+}
+
+.reserveMeetingRoomContainerDiv {
+  display: flex;
+  flex-direction: row;
+}
+
+.meetingRoomByCompanyDiv {
+  border: 1px solid black;
+}

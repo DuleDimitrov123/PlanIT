@@ -43,3 +43,29 @@ export const makeTextFromListOfBreakfasts = (list) =>{
     console.log(text);
     return text.substr(0, text.length-2);
 };
+
+export function RemoveTAndTimeZoneFromDateTime(dateTime) {
+    dateTime = dateTime.replace('T', ' ');
+    dateTime = dateTime.split('+')[0];
+    return dateTime.split('.')[0];
+}
+
+export function CheckIfIAmLoggedIn() {
+    const username = localStorage.getItem("username");
+    const loginToken = localStorage.getItem("loginToken");
+    const companyName = localStorage.getItem("companyName");
+
+    if(username === null || username === undefined || 
+        loginToken === null || loginToken === undefined || 
+        companyName === null || companyName === undefined)
+    {
+        return false;
+    }
+    return true;
+}
+
+export function LogOut() {
+    localStorage.removeItem("loginToken");
+    localStorage.removeItem("username");
+    localStorage.removeItem("companyName");
+}

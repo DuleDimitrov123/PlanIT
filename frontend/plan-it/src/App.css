@@ -1,3 +1,4 @@
+@import url("https://cdn.syncfusion.com/ej2/material.css");
 .App {
   text-align: center;
 }
@@ -41,7 +42,7 @@
   width: 100%;
   z-index: 500000;
   top: 0;
-  background-color: rgba(0,0,0,.288);
+  background-color: rgba(0, 0, 0, 0.288);
   opacity: 1;
   position: fixed;
   display: block;
@@ -73,17 +74,20 @@
   }
 }
 
-.companiesDiv
-{
+.companiesDiv {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items:flex-end;
+  align-items: flex-end;
   align-content: flex-end;
   justify-items: flex-end;
 }
 
-.companiesOneCardDiv
-{
+.companiesOneCardDiv {
+}
 
+.divForCenterContent {
+  display: flex;
+  justify-content: center;
+  align-content: center;
 }

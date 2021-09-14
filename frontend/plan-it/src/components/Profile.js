@@ -9,7 +9,7 @@ import EditProfile from './EditProfile'
 import Error from './Error'
 import jwt_decode from 'jwt-decode'
 
-function Profile() {
+function Profile({setAmILoggedIn}) {
     const { username } = useParams();
 
     const [openEditDialog, setOpenEditDialog] = useState(false);
@@ -45,6 +45,8 @@ function Profile() {
     localStorage.setItem("companyName", staff.companyName);
 
     console.log(staff);
+
+    setAmILoggedIn(true);
 
     return (
         <div>

@@ -1,8 +1,14 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import { Link } from "react-router-dom";
+import * as generalHelpers from '../services/generalHelpers.js';
 
-function NavBar() {
+function NavBar({amILoggedIn}) {
+    const handleLogOut = () => {
+        generalHelpers.LogOut();   
+        window.location.replace('/');
+    }
+
     return (
         <Navbar bg="light" expand="lg">
             <Container>
@@ -32,13 +38,27 @@ function NavBar() {
                         </Link>
                     </Nav.Link>
 
-                        <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                            <NavDropdown.Item>Action</NavDropdown.Item>
-                            <NavDropdown.Item>Another action</NavDropdown.Item>
-                            <NavDropdown.Item>Something</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item>Separated link</NavDropdown.Item>
-                        </NavDropdown>
+                    <Nav.Link>
+                        <Link to="/meeting-room">
+                            Meeting room
+                        </Link>
+                    </Nav.Link>
+
+                    {amILoggedIn && 
+                        <Nav.Link>
+                            <Link to={`/profile/${localStorage.getItem('username')}`}>
+                                My profile
+                            </Link>
+                        </Nav.Link>
+                    }
+
+                    {amILoggedIn && 
+                        <Nav.Link>
+                            <button onClick={handleLogOut} className="btn btn-light" >
+                                Log out
+                            </button>
+                        </Nav.Link>
+                    }
                     </Nav>
                 </Navbar.Collapse>
             </Container>

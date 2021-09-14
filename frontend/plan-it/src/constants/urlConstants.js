@@ -33,3 +33,15 @@ export const ADD_BREAKFAST_FOR_USER = "/breakfasts/actions/add-for-date";
 export const GET_BREAKFAST_FOR_USER = "/breakfasts/actions/all-by-staff/";
 
 export const GET_BREAKFAST_BY_COMPANY_AND_DATE = "/breakfasts/actions/all-by-company-and-date";
+
+export const ADD_NEW_MEETING_ROOM = "/meeting-rooms";
+
+export const GET_MEETING_ROOM_BY_COMPANY = "/meeting-rooms/actions/get-by-company-name/";
+
+export const UPDATE_MEETING_ROOM = "/meeting-rooms"
+
+export const RESERVE_MEETING_ROOM ="/meeting-rooms/actions/reserve";
+
+export const GET_ALL_RESERVED_MEETING_ROOMS = "/meeting-rooms/actions/all-reserved";
+
+export const UNRESERVE_MEETING_ROOM = "/meeting-rooms/actions/unreserve";

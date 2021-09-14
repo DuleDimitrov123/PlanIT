@@ -74,6 +74,7 @@ namespace PlanIT.Api.Controllers
 
         [HttpPost]
         [Route("meeting-rooms")]
+        [Authorize(Policy = "StaffCanCreate")]
         public ActionResult AddMeetingRoom([FromBody] MeetingRoomBO meetingRoomBO)
         {
             try
