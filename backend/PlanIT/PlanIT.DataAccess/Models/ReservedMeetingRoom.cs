@@ -8,9 +8,9 @@ namespace PlanIT.DataAccess.Models
 
         public string CompanyName { get; set; }
 
-        public DateTimeOffset StartDateTime { get; set; }
+        public DateTime StartDateTime { get; set; }
 
-        public DateTimeOffset EndDateTime { get; set; }
+        public DateTime EndDateTime { get; set; }
 
         public string StaffUsernameWhoReserved { get; set; }
 
