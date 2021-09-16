@@ -75,7 +75,7 @@ function Profile({setAmILoggedIn}) {
                     <span class="text-secondary">https://bootdey.com</span>
                   </li>
                 </ul>
-              </div>*/}
+    </div>*/}
             </div>
             <div class="col-md-8">
               <div class="card mb-3">
@@ -152,6 +152,7 @@ function Profile({setAmILoggedIn}) {
                   <hr/>
                 </div>
               </div>
+                  
 {/*
               <div class="row gutters-sm">
                 <div class="col-sm-6 mb-3">
@@ -180,10 +181,8 @@ function Profile({setAmILoggedIn}) {
                 </div>
               </div>
 */}
-
             </div>
           </div>
-
         </div>
     </div>
     </div>
