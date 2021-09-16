@@ -33,7 +33,7 @@ function MeetingRoom() {
         loginToken === null || loginToken === undefined || 
         companyName === null || companyName === undefined)
     {
-        window.location.replace("/logIn");
+        window.location.replace("/");
     }
 
     const userCanCreate = generalHelpers.CheckIfLoggerUserCanCreate();

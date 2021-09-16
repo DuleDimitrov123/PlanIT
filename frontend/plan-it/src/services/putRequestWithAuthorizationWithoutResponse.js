@@ -21,7 +21,7 @@ export async function putRequestWithAuthorizationWithoutResponse(request, url) {
             localStorage.removeItem("companyName");
 
             exception = "Unauthorized";
-            window.location.replace("/logIn");
+            window.location.replace("/");
         }
         else
         {

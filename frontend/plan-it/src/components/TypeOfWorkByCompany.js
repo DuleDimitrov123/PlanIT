@@ -33,7 +33,7 @@ function TypeOfWorkByCompany() {
         }
         else
         {
-            window.location.replace("/logIn");
+            window.location.replace("/");
         }
         setShowSpinner(false);
     }

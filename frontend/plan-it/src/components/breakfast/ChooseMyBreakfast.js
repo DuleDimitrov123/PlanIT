@@ -42,7 +42,7 @@ function ChooseMyBreakfast({handleWasAnError}) {
         }
         else
         {
-            window.location.replace("/logIn");
+            window.location.replace("/");
         }
     }, [date]);
 
@@ -72,7 +72,7 @@ function ChooseMyBreakfast({handleWasAnError}) {
         }
         else
         {
-            window.location.replace("/logIn");
+            window.location.replace("/");
         }
     };
 

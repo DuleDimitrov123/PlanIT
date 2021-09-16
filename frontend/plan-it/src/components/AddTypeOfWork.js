@@ -68,7 +68,7 @@ function AddTypeOfWork() {
                 localStorage.removeItem("username");
                 localStorage.removeItem("companyName");
 
-                window.location.replace("/logIn");
+                window.location.replace("/");
             }
             else
             {
