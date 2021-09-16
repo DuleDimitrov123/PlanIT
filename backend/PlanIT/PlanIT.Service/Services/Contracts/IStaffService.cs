@@ -18,6 +18,12 @@ namespace PlanIT.Service.Services.Contracts
 
         void DeleteStaffByUsername(string username);
 
+        string GetProfilePicture(string staffUsername);
+
+        void AddProfilePicture(string staffUsername, string content);
+
+        void DeleteProfilePicture(string staffUsername);
+
         IList<StaffCanCreateByCompany> GetStaffCanCreateByCompany();
 
         IList<string> GetCanCreateUsernamesByCompany(string companyName);

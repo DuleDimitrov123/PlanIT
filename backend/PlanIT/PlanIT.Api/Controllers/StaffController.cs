@@ -253,5 +253,55 @@ namespace PlanIT.Api.Controllers
                 return BadRequest(ex.ToString());
             }
         }
+
+        [HttpGet]
+        [Route("staff/actions/get-profile-picture/{staffUsername}")]
+        public ActionResult<GetProfilePictureResponse> GetProfilePicture([FromRoute(Name = "staffUsername")] string staffUsername)
+        {
+            try
+            {
+                var content = _staffService.GetProfilePicture(staffUsername);
+
+                var response = new GetProfilePictureResponse(content);
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpPost]
+        [Route("staff/actions/add-profile-picture")]
+        public ActionResult AddProfilePicture([FromBody] AddProfilePictureRequest request)
+        {
+            try
+            {
+                _staffService.AddProfilePicture(request.StaffUsername, request.Content);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpDelete]
+        [Route("staff/actions/delete-profile-picture/{staffUsername}")]
+        public ActionResult DeleteProfilePicture([FromRoute(Name = "staffUsername")] string staffUsername)
+        {
+            try
+            {
+                _staffService.DeleteProfilePicture(staffUsername);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
     }
 }

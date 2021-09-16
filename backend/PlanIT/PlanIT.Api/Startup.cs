@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace PlanIT.Api
 {
@@ -40,6 +41,7 @@ namespace PlanIT.Api
             services.AddScoped<ICompanyService, CompanyService>();
 
             services.AddScoped<IStaffRepository, StaffRepository>();
+            services.AddScoped<IProfilePictureByStaffRepository, ProfilePictureByStaffRepository>();
             services.AddScoped<IStaffService, StaffService>();
             services.AddScoped<IStaffCanCreateByCompanyRepository, StaffCanCreateByCompanyRepository>();
             services.AddScoped<IStaffByCompanyRepository, StaffByCompanyRepository>();
@@ -64,7 +66,13 @@ namespace PlanIT.Api
             services.AddScoped<IBreakfastByStaffRepository, BreakfastByStaffRepository>();
             services.AddScoped<IBreakfastService, BreakfastService>();
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
+
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            };
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PlanIT.Api", Version = "v1" });

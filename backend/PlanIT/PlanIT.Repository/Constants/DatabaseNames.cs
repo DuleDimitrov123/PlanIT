@@ -8,6 +8,8 @@
 
         public static string Staff = "Staff";
 
+        public static string ProfilePictureByStaff = "ProfilePictureByStaff";
+
         public static string StaffCanCreateByCompany = "StaffCanCreateByCompany";
 
         public static string StaffByCompany = "StaffByCompany";
