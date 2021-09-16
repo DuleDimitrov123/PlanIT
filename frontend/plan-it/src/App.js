@@ -4,7 +4,7 @@ import Company from './components/Company.js'
 import Home from './components/Home.js'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NavBar from './components/NavBar.js';
-import Profile from './components/Profile';
+import Profile from './components/Profile2';
 import TypeOfWork from './components/TypeOfWork';
 import LogInRegister from './components/LogInRegister';
 import Error from './components/Error';
@@ -15,13 +15,6 @@ import * as generalHelpers from './services/generalHelpers.js';
 
 function App() {
   const [amILoggedIn, setAmILoggedIn] = useState(generalHelpers.CheckIfIAmLoggedIn());
-
-  const requireAuth = () =>{
-    if(!generalHelpers.CheckIfIAmLoggedIn())
-    {
-      window.location.replace("/logIn");
-    }
-  }
 
   return (
     <Router>

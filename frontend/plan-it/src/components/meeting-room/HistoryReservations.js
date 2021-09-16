@@ -64,8 +64,8 @@ function HistoryReservations({allReservations, meetingRooms, handleWasAnError}) 
                                 <tr>
                                     <td>{r.companyName}</td>
                                     <td>{r.meetingRoom}</td>
-                                    <td>{new Date(r.startDateTime).toString()}</td>
-                                    <td>{new Date(r.endDateTime).toString()}</td>
+                                    <td>{generalHelpers.RemoveTAndTimeZoneFromDateTime(r.startDateTime)}</td>
+                                    <td>{generalHelpers.RemoveTAndTimeZoneFromDateTime(r.endDateTime)}</td>
                                     <td>{r.staffUsernameWhoReserved}</td>
                                     <td>{r.numberOfSeatsUsed}</td>
                                     <td>
