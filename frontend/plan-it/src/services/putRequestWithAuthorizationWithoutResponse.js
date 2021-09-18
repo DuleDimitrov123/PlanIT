@@ -1,4 +1,4 @@
-export async function postRequestWithAuthorizationWithoutResponse(request, url) {
+export async function putRequestWithAuthorizationWithoutResponse(request, url) {
     let partForToken = '';
     const token = localStorage.getItem("loginToken");
     if(token!=null && token!=undefined)
@@ -7,7 +7,7 @@ export async function postRequestWithAuthorizationWithoutResponse(request, url) 
     }
     let exception = null;
     const response = await fetch(url, {
-        method: "POST",
+        method: "PUT",
         headers: { "Content-Type": "application/json",
         "Authorization":partForToken
      },

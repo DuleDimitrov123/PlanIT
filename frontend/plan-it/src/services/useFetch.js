@@ -30,7 +30,7 @@ export default function useFetch(url) {
                     localStorage.removeItem("username");
                     localStorage.removeItem("companyName");
     
-                    window.location.replace("/logIn");
+                    window.location.replace("/");
                 }else {
                     throw response;
                 }

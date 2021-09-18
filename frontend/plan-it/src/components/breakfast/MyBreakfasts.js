@@ -32,7 +32,7 @@ function MyBreakfasts({handleWasAnError}) {
                     {breakfasts !== null && breakfasts.map(b => {
                         return(
                             <tr>
-                                <th>{generalHelpers.LocalDateToText(b.date)}</th>
+                                <th>{generalHelpers.LocalDateToDateString(b.date)}</th>
                                 <td>{generalHelpers.makeTextFromListOfBreakfasts(b.breakfastItems)}</td>
                             </tr>
                         )

@@ -111,7 +111,7 @@ namespace PlanIT.Service.Services.Implementations
 
                     if (allReserved.ElementAt(i).EndDateTime != allReserved.ElementAt(i + 1).StartDateTime)
                     {
-                        message += $", or between {allReserved.ElementAt(i).EndDateTime.DateTime.ToShortTimeString()} and {allReserved.ElementAt(i + 1).StartDateTime.DateTime.ToShortTimeString()}";
+                        message += $", or between {allReserved.ElementAt(i).EndDateTime.ToLocalTime()} and {allReserved.ElementAt(i + 1).StartDateTime.ToLocalTime()}";
                     }
                 }
 
@@ -132,12 +132,16 @@ namespace PlanIT.Service.Services.Implementations
                 {
                     _reservedMeetingRoomRepository.ReserveMeetingRoom(reservedMeetingRoom);
                 }
+                else
+                {
+                    throw new Exception("Too many people for the meeting");
+                }
             }
             catch (NotAvailableMeetingRoomException ex)
             {
                 message = $"It is not possible to reserve {reservedMeetingRoom.MeetingRoom} " +
-                        $"from {reservedMeetingRoom.StartDateTime.DateTime.ToString()} to {reservedMeetingRoom.EndDateTime.DateTime.ToString()}. You can reserve before {allReserved.ElementAt(0).StartDateTime.DateTime.ToShortTimeString()}, "
-                        + $"or after {allReserved.ElementAt(allReserved.Count() - 1).EndDateTime.DateTime.ToShortTimeString()}" + message;
+                        $"from {reservedMeetingRoom.StartDateTime.ToLocalTime()} to {reservedMeetingRoom.EndDateTime.ToLocalTime()}. You can reserve before {allReserved.ElementAt(0).StartDateTime.ToLocalTime()}, "
+                        + $"or after {allReserved.ElementAt(allReserved.Count() - 1).EndDateTime.ToLocalTime()}" + message;
 
                 throw new Exception(message);
             }

@@ -9,7 +9,7 @@ import EditProfile from './EditProfile'
 import Error from './Error'
 import jwt_decode from 'jwt-decode'
 
-function Profile() {
+function Profile({setAmILoggedIn}) {
     const { username } = useParams();
 
     const [openEditDialog, setOpenEditDialog] = useState(false);
@@ -46,6 +46,8 @@ function Profile() {
 
     console.log(staff);
 
+    setAmILoggedIn(true);
+
     return (
         <div>
             <EditProfile open = {openEditDialog} handleClose = {handleClose} staff = {staff}/>
@@ -73,7 +75,7 @@ function Profile() {
                     <span class="text-secondary">https://bootdey.com</span>
                   </li>
                 </ul>
-              </div>*/}
+    </div>*/}
             </div>
             <div class="col-md-8">
               <div class="card mb-3">
@@ -150,6 +152,7 @@ function Profile() {
                   <hr/>
                 </div>
               </div>
+                  
 {/*
               <div class="row gutters-sm">
                 <div class="col-sm-6 mb-3">
@@ -178,10 +181,8 @@ function Profile() {
                 </div>
               </div>
 */}
-
             </div>
           </div>
-
         </div>
     </div>
     </div>

@@ -23,7 +23,7 @@ export async function postRequestWithAuthorization(request, url) {
                 localStorage.removeItem("companyName");
 
                 exception = "Unauthorized";
-                window.location.replace("/logIn");
+                window.location.replace("/");
             }
             else
             {

@@ -14,14 +14,17 @@ namespace PlanIT.Service.Services.Implementations
         private readonly IStaffRepository _staffRepository;
         private readonly IStaffCanCreateByCompanyRepository _staffCanCreateByCompanyRepository;
         private readonly IStaffByCompanyRepository _staffByCompanyRepository;
+        private readonly IProfilePictureByStaffRepository _profilePictureByStaffRepository;
 
         public StaffService(IStaffRepository staffRepository,
             IStaffCanCreateByCompanyRepository staffCanCreateByCompanyRepository,
-            IStaffByCompanyRepository staffByCompanyRepository)
+            IStaffByCompanyRepository staffByCompanyRepository,
+            IProfilePictureByStaffRepository profilePictureByStaffRepository)
         {
             _staffRepository = staffRepository;
             _staffCanCreateByCompanyRepository = staffCanCreateByCompanyRepository;
             _staffByCompanyRepository = staffByCompanyRepository;
+            _profilePictureByStaffRepository = profilePictureByStaffRepository;
         }
 
         public IList<StaffBO> GetStaff()
@@ -120,6 +123,8 @@ namespace PlanIT.Service.Services.Implementations
             }
 
             _staffRepository.DeleteStaffByUsername(username);
+
+            DeleteProfilePicture(username);
         }
 
         public IList<string> GetCanCreateUsernamesByCompany(string companyName)
@@ -176,6 +181,33 @@ namespace PlanIT.Service.Services.Implementations
         public void ChangeStaffPosition(string companyName, string staffUsername, string newPosition)
         {
             _staffByCompanyRepository.ChangeStaffPosition(companyName, staffUsername, newPosition);
+        }
+
+        public string GetProfilePicture(string staffUsername)
+        {
+            return _profilePictureByStaffRepository.GetProfilePicture(staffUsername);
+        }
+
+        public void AddProfilePicture(string staffUsername, string content)
+        {
+            var staff = _staffRepository.GetStaffByUsername(staffUsername);
+
+            if(staff == null)
+            {
+                throw new Exception($"Staff with username {staffUsername} doesn't exist!");
+            }
+
+            _profilePictureByStaffRepository.AddProfilePicture(
+                new ProfilePictureByStaff
+                {
+                    StaffUsername = staffUsername,
+                    Content = content
+                });
+        }
+
+        public void DeleteProfilePicture(string staffUsername)
+        {
+            _profilePictureByStaffRepository.DeleteProfilePicture(staffUsername);
         }
     }
 }

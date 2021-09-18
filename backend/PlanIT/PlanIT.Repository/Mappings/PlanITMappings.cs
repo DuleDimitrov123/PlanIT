@@ -33,6 +33,12 @@ namespace PlanIT.Repository.Mappings
                 .Column(s => s.Position, cm => cm.WithName(StaffColumns.Position).WithDbType<string>()).CaseSensitive()
                 .Column(s => s.CanCreate, cm => cm.WithName(StaffColumns.CanCreate).WithDbType<bool>()).CaseSensitive();
 
+            For<ProfilePictureByStaff>()
+                .TableName(DatabaseNames.ProfilePictureByStaff).CaseSensitive()
+                .PartitionKey(p => p.StaffUsername)
+                .Column(p => p.StaffUsername, cm => cm.WithName(ProfilePictureByStaffColumns.StaffUsername).WithDbType<string>()).CaseSensitive()
+                .Column(p => p.Content, cm => cm.WithName(ProfilePictureByStaffColumns.Content).WithDbType<string>()).CaseSensitive();
+
             For<StaffCanCreateByCompany>()
                 .TableName(DatabaseNames.StaffCanCreateByCompany).CaseSensitive()
                 .PartitionKey(s => s.CompanyName)
@@ -81,8 +87,8 @@ namespace PlanIT.Repository.Mappings
                 .ClusteringKey(a => a.EndDateTime)
                 .Column(a => a.MeetingRoom, cm => cm.WithName(ReservedMeetingRoomColumns.MeetingRoom).WithDbType<string>()).CaseSensitive()
                 .Column(a => a.CompanyName, cm => cm.WithName(ReservedMeetingRoomColumns.CompanyName).WithDbType<string>()).CaseSensitive()
-                .Column(a => a.StartDateTime, cm => cm.WithName(ReservedMeetingRoomColumns.StartDateTime).WithDbType<DateTimeOffset>()).CaseSensitive()
-                .Column(a => a.EndDateTime, cm => cm.WithName(ReservedMeetingRoomColumns.EndDateTime).WithDbType<DateTimeOffset>()).CaseSensitive()
+                .Column(a => a.StartDateTime, cm => cm.WithName(ReservedMeetingRoomColumns.StartDateTime).WithDbType<DateTime>()).CaseSensitive()
+                .Column(a => a.EndDateTime, cm => cm.WithName(ReservedMeetingRoomColumns.EndDateTime).WithDbType<DateTime>()).CaseSensitive()
                 .Column(a => a.StaffUsernameWhoReserved, cm => cm.WithName(ReservedMeetingRoomColumns.StaffUsernameWhoReserved).WithDbType<string>()).CaseSensitive()
                 .Column(a => a.NumberOfSeatsUsed, cm => cm.WithName(ReservedMeetingRoomColumns.NumberOfSeatsUsed).WithDbType<int>()).CaseSensitive();
 
