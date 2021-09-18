@@ -52,12 +52,14 @@ function NavBar({amILoggedIn}) {
                         </Nav.Link>
                     }
 
-                    {amILoggedIn && 
+                    {amILoggedIn &&
+                        <div className="form-inline my-2 my-lg-0" style={{paddingLeft:"500px"}}> 
                         <Nav.Link>
-                            <button onClick={handleLogOut} className="btn btn-light" >
+                            <button onClick={handleLogOut} className="btn btn-outline-success my-2 my-sm-0" >
                                 Log out
                             </button>
                         </Nav.Link>
+                        </div>
                     }
                     </Nav>
                 </Navbar.Collapse>

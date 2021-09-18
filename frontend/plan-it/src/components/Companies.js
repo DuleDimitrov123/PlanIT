@@ -59,8 +59,10 @@ function Companies() {
     return (
         <div>
             {showSpinner && <Spinner/>}
-            {!userHasCompany && <label>Please choose a company or create new!</label>}
-            <CreateCompany />
+            <div className="divForCenterContent">
+                {!userHasCompany && <label>Please choose a company or create new!</label>}
+                <CreateCompany />
+            </div>
             <div className="companiesDiv">
                 {companies.map(company => {
                     return (

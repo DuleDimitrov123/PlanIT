@@ -6,6 +6,7 @@ import * as urlConstants from '../constants/urlConstants.js'
 import * as generalConstants from '../constants/generalConstants.js';
 import * as exceptionConstants from '../constants/exceptionConstants.js';
 import {postRequestWithAuthorization} from '../services/postRequestWithAuthorization';
+import '../App.css'
 
 function AddTypeOfWork() {
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -107,7 +108,12 @@ function AddTypeOfWork() {
                     />
                 </div>
             </div>
-            {errorMessage && <label style={{color:"red"}}>{errorMessage}</label>}
+            {
+                errorMessage && 
+                <div className="divForCenterContent">
+                    <label style={{color:"red"}}>{errorMessage}</label>
+                </div>
+            }
             <hr/>
             <div className="divForCenterContent">
                 <button className="btn btn-primary"
