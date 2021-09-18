@@ -15,7 +15,6 @@ function ChangeProfilePicture() {
     };
 
     function handleToggleButtonClick() {
-        console.log(buttonMessage);
         if(buttonMessage === closeChangeProfilePictureMessage)
         {
             setButtonMessage(changeProfilePictureMessage);

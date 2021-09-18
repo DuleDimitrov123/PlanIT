@@ -124,7 +124,7 @@ namespace PlanIT.Service.Services.Implementations
 
             _staffRepository.DeleteStaffByUsername(username);
 
-            _profilePictureByStaffRepository.DeleteProfilePicture(username);
+            DeleteProfilePicture(username);
         }
 
         public IList<string> GetCanCreateUsernamesByCompany(string companyName)

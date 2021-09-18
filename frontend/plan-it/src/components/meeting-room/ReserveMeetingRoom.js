@@ -1,18 +1,12 @@
 import React, {useState} from 'react';
 import '../../App.css';
-import TimePicker from 'react-time-picker';
-import { Calendar, momentLocalizer } from 'react-big-calendar'
-import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import DateTimePicker from 'react-datetime-picker';
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import {postRequestWithAuthorizationWithoutResponse} from '../../services/postRequestWithAuthorizationWithoutResponse.js'
 import * as urlConstants from '../../constants/urlConstants.js';
 import * as exceptionConstants from '../../constants/exceptionConstants';
-import {DateTimePickerComponent} from '@syncfusion/ej2-react-calendars';
-import UTCDateTimePicker from '../UTCDateTimePicker';
 
 function ReserveMeetingRoom({meetingRooms, handleWasAnError}) {
     const [selectedMeetingRoom, setSelectedMeetingRoom] = useState(meetingRooms !== null && meetingRooms.length !== 0 ? meetingRooms[0].meetingRoom : null);
