@@ -66,12 +66,10 @@ namespace PlanIT.Api
             services.AddScoped<IBreakfastByStaffRepository, BreakfastByStaffRepository>();
             services.AddScoped<IBreakfastService, BreakfastService>();
 
-            services.AddControllers().AddNewtonsoftJson();
-
-            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            services.AddControllers().AddNewtonsoftJson(options =>
             {
-                DateTimeZoneHandling = DateTimeZoneHandling.Utc
-            };
+                options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
+            });
 
             services.AddSwaggerGen(c =>
             {
