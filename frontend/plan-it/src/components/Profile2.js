@@ -12,6 +12,7 @@ import '../App.css'
 import TypeOfWorkByStaffAndDateToday from './TypeOfWorkByStaffAndDateToday'
 import BreakfastByStaffAndDateToday from '../components/breakfast/BreakfastByStaffAndDateToday.js'
 import ChangeProfilePicture from './ChangeProfilePicture'
+import ProfilePicture from './ProfilePicture'
 
 function Profile2({setAmILoggedIn}) {
     const { username } = useParams();
@@ -64,7 +65,7 @@ function Profile2({setAmILoggedIn}) {
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="d-flex flex-column align-items-center text-center">
-                                                 <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" style={{width:"150"}}/>
+                                                 <ProfilePicture/>
                                                 <div class="mt-3">
                                                     <h4>{staff.username}</h4>
                                                     {staff.position && <p class="text-secondary mb-1">{staff.position}</p>}
@@ -91,7 +92,7 @@ function Profile2({setAmILoggedIn}) {
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">First name:</h6>
+                                        <h6 class="mb-0">First name</h6>
                                     </div>
                                 <div class="col-sm-9 text-secondary">
                                 {
@@ -105,7 +106,7 @@ function Profile2({setAmILoggedIn}) {
                             <hr/>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Last name:</h6>
+                                    <h6 class="mb-0">Last name</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                 {
@@ -122,7 +123,7 @@ function Profile2({setAmILoggedIn}) {
                                     <h6 class="mb-0">Date of birth</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {staff.dateOfBirth != null ? generalHelpers.DateTimeToDateText(staff.dateOfBirth) : 
+                                    {staff.dateOfBirth != null ? new Date(staff.dateOfBirth).toDateString() : 
                                     <div>
                                         <label>Please edit your info</label>
                                     </div>

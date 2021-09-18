@@ -12,9 +12,6 @@ function ChangeProfilePicture() {
 
     const handleOnDoneProfilePicture = (file) => {
         setProfilePicture(file);
-
-        alert("Added profile picture");
-        console.log(profilePicture);
     };
 
     function handleToggleButtonClick() {
@@ -38,6 +35,8 @@ function ChangeProfilePicture() {
         };
 
         const {response, exception} = await postRequestWithAuthorizationWithoutResponse(request, url);
+
+        window.location.replace(`/profile/${localStorage.getItem("username")}`);
     };
 
     return (
@@ -55,9 +54,6 @@ function ChangeProfilePicture() {
                         <button className="btn btn-primary" onClick={handleChangeProfilePicture}>Change profile picture</button>        
                     </div>
                     
-            }
-            {profilePicture !== null &&
-                <img src={`${profilePicture.base64}`} />
             }
         </div>
     )

@@ -7,7 +7,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Spinner from './Spinner.js'
 //@import "../../node_modules/react-moment-datepicker/lib/react-moment-datepicker";
 import * as urlConstants from '../constants/urlConstants'
-
+import DatePicker from 'react-datepicker'
 
 
 
@@ -33,10 +33,10 @@ function EditProfile({open, handleClose, staff}) {
         const request = {
             firstName : firstName,
             lastName : lastName,
-            //dateOfBirth : dateOfBirth,
+            //dateOfBirth : new Date(dateOfBirth.getFullYear(), dateOfBirth.getMonth(), dateOfBirth.getDate(), 3, 0, 0),
+            dateOfBirth : dateOfBirth,
             position : position
         };
-        //console.log(request);
 
         await fetch(url, {
             method: "PUT",
@@ -69,10 +69,13 @@ function EditProfile({open, handleClose, staff}) {
                         <label>Last name:</label>
                         <input class="form-control" value={lastName} onChange = {(ev) => setLastName(ev.target.value)}/>
                     </div>
-                    {/*<div class="form-group">
+                    {<div class="form-group">
                         <label>DateOfBirth:</label>
-                        <MomentDatepicker timezone={moment.} date={dateOfBirth}/>
-                    </div>*/}
+                        <DatePicker
+                            selected={dateOfBirth}
+                            onChange={date => setDateOfBirth(date)}
+                        />
+                    </div>}
                     <div class="form-group">
                         <label>Position:</label>
                         <input class="form-control" value={position} onChange = {(ev) => setPosition(ev.target.value)}/>
