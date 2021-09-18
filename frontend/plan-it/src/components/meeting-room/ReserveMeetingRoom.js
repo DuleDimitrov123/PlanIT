@@ -45,9 +45,14 @@ function ReserveMeetingRoom({meetingRooms, handleWasAnError}) {
                 const error = await exception.text();
                 if(error.includes(exceptionConstants.IT_IS_NOT_POSSIBLE_TO_RESERVE_MEETING_ROOM))
                 {
-                    let tmpMsg = error.split('at')[0];
+                    /*let tmpMsg = error.split('at')[0];
                     tmpMsg = tmpMsg.replace('System.Exception: ', '');
-                    setErrorMessage(tmpMsg);
+                    setErrorMessage(tmpMsg);*/
+                    setErrorMessage(exceptionConstants.IT_IS_NOT_POSSIBLE_TO_RESERVE_MEETING_ROOM);
+                }
+                else if (error.includes(exceptionConstants.TOO_MANY_PEOPLE_FOR_THE_MEETING))
+                {
+                    setErrorMessage(exceptionConstants.TOO_MANY_PEOPLE_FOR_THE_MEETING);
                 }
                 else
                 {

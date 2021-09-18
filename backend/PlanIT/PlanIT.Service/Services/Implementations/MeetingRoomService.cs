@@ -132,6 +132,10 @@ namespace PlanIT.Service.Services.Implementations
                 {
                     _reservedMeetingRoomRepository.ReserveMeetingRoom(reservedMeetingRoom);
                 }
+                else
+                {
+                    throw new Exception("Too many people for the meeting");
+                }
             }
             catch (NotAvailableMeetingRoomException ex)
             {
