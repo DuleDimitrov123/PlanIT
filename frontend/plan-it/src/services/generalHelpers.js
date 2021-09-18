@@ -5,6 +5,10 @@ export function LocalDateToText(localDate){
     return localDate.day + "-" + localDate.month + "-" + localDate.year
 }
 
+export function LocalDateToDateString(localDate) {
+    return new Date(localDate.year, localDate.month, localDate.day).toDateString();
+}
+
 export function TextToLocalDate(text)
 {
     const arr = text.split("-");

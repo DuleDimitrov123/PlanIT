@@ -86,7 +86,8 @@ function TypeOfWorkByStaff() {
                         {filteredTypeOfWork != null && filteredTypeOfWork.map(t => {
                             return (
                                 <tr>
-                                    <th scope="row">{generalHelpers.DateTimeToDateText(t.date)}</th>
+                                    {/*<th scope="row">{generalHelpers.DateTimeToDateText(t.date)}</th>*/}
+                                    <th scope="row">{new Date(t.date).toDateString()}</th>
                                     <td><input type="checkbox" checked={t.typeOfWork ===generalConstants.WFO} disabled={true}/></td>
                                     <td><input type="checkbox" checked={t.typeOfWork ===generalConstants.WFH} disabled={true}/></td>
                                 </tr>

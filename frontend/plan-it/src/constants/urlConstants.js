@@ -51,3 +51,5 @@ export const GET_ALL_RESERVED_MEETING_ROOMS = "/meeting-rooms/actions/all-reserv
 export const UNRESERVE_MEETING_ROOM = "/meeting-rooms/actions/unreserve";
 
 export const ADD_PROFILE_PICTURE = "/staff/actions/add-profile-picture";
+
+export const GET_PROFILE_PICTURE = "/staff/actions/get-profile-picture/";

@@ -60,12 +60,19 @@ function HistoryReservations({allReservations, meetingRooms, handleWasAnError}) 
                     </thead>
                     <tbody>
                         {filteredReservations.map(r => {
+                            let start = r.startDateTime;
+                            let dateStart = new Date(start);
+
+                            let end = r.endDateTime;
+                            let dateEnd = new Date(end);
                             return(
                                 <tr>
                                     <td>{r.companyName}</td>
                                     <td>{r.meetingRoom}</td>
-                                    <td>{generalHelpers.RemoveTAndTimeZoneFromDateTime(r.startDateTime)}</td>
-                                    <td>{generalHelpers.RemoveTAndTimeZoneFromDateTime(r.endDateTime)}</td>
+                                    {/*<td>{generalHelpers.RemoveTAndTimeZoneFromDateTime(r.startDateTime)}</td>*/}
+                                    <td>{`${dateStart.toDateString()} ${dateStart.toLocaleTimeString()}`}</td>
+                                    {/*<td>{generalHelpers.RemoveTAndTimeZoneFromDateTime(r.endDateTime)}</td>*/}
+                                    <td>{`${dateEnd.toDateString()} ${dateEnd.toLocaleTimeString()}`}</td>
                                     <td>{r.staffUsernameWhoReserved}</td>
                                     <td>{r.numberOfSeatsUsed}</td>
                                     <td>
