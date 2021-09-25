@@ -94,3 +94,9 @@
   flex-direction: row;
   justify-content: space-evenly;
 }
+
+.companyContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}

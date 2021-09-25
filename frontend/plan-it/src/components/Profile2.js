@@ -137,7 +137,12 @@ function Profile2({setAmILoggedIn}) {
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                 {
-                                    staff.companyName != null ? staff.companyName : 
+                                    staff.companyName != null ?
+                                    <div>
+                                        <p>{staff.companyName}</p>
+                                        <Link to={`/companies/${staff.companyName}`} class="btn btn-secondary">Visit my company page</Link>
+                                    </div>
+                                    :
                                     <div>
                                         <label>Please choose your company</label>
                                         <Link to={"/companies"} class="btn btn-primary">See companies</Link>
