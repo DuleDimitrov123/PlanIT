@@ -14,17 +14,10 @@ namespace PlanIT.Service.BusinessLogic
             _configuration = configuration;
         }
 
-        public bool IsAllowed(IMeetingRoomService meetingRoomService, ReservedMeetingRoom reservedMeetingRoom)
+        public bool IsAllowed(int numberOfPeopleForTheMeeting, ReservedMeetingRoom reservedMeetingRoom)
         {
-            var meetingRoom = meetingRoomService.GetMeetingRoomByCompanyAndMeetingRoom(reservedMeetingRoom.CompanyName, reservedMeetingRoom.MeetingRoom);
-
-            if (meetingRoom == null)
-            {
-                throw new Exception($"Meeting room {reservedMeetingRoom.MeetingRoom} doesn't exist in {reservedMeetingRoom.CompanyName}");
-            }
-
             double allowedPercentage = double.Parse(_configuration["ApplicationConstants:AllowedPercentageInMeetingRoom"]);
-            double reservedPercentage = 100.0 * ((double)reservedMeetingRoom.NumberOfSeatsUsed / (double)meetingRoom.NumberOfSeats);
+            double reservedPercentage = 100.0 * ((double)reservedMeetingRoom.NumberOfSeatsUsed / (double)numberOfPeopleForTheMeeting);
 
             return allowedPercentage >= reservedPercentage;
         }

@@ -5,6 +5,6 @@ namespace PlanIT.Service.BusinessLogic
 {
     public interface IAllowedNumberInMeetingRoom
     {
-        bool IsAllowed(IMeetingRoomService meetingRoomService, ReservedMeetingRoom reservedMeetingRoom);
+        bool IsAllowed(int numberOfPeopleForTheMeeting, ReservedMeetingRoom reservedMeetingRoom);
     }
 }
