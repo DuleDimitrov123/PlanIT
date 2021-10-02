@@ -18,7 +18,7 @@ function Home({amILoggedIn}) {
                     <div class="carousel-item active">
                         <img class="d-block w-100" src="/pictures/working-from-home-vs-office.jpg" alt="First slide"/>
                         <div className="carousel-caption d-none d-md-block divForCenterContent">
-                            <p style={{color:"blue", fontSize:"20px"}}>How do you fill today? Do you want to work from the office, or from home? Please tell your colleagues</p>
+                            <p style={{color:"blue", fontSize:"20px"}}>How do you feel today? Do you want to work from the office, or from home? Please tell your colleagues</p>
                         </div>
                     </div>
                     <div class="carousel-item">
