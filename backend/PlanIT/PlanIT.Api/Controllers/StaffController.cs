@@ -56,6 +56,7 @@ namespace PlanIT.Api.Controllers
 
         [HttpPost]
         [Route("staff")]
+        [AllowAnonymous]
         public ActionResult CreateStaff([FromBody] StaffBO staffBO)
         {
             try
