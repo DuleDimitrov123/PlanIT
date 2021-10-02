@@ -19,19 +19,24 @@ function App() {
   return (
     <Router>
       <NavBar amILoggedIn={amILoggedIn}/>
+
       <Switch>
         <Route exact path="/">
           <Home amILoggedIn={amILoggedIn}/>
         </Route>
+
         <Route exact path="/companies">
           <Companies />
         </Route>
+
         <Route exact path="/companies/:companyName">
           <Company />
         </Route>
+
         <Route exact path="/profile/:username">
           <Profile setAmILoggedIn={setAmILoggedIn}/>
         </Route>
+        
         <Route exact path="/typeOfWork">
           <TypeOfWork/>
         </Route>

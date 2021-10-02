@@ -10,7 +10,7 @@ function StaffByCompany({ companyName }) {
     if (loading) return <Spinner />
 
     return (
-        <ul class="list-group" style={{ width: "18rem", height: "18rem" }}>
+        <ul class="list-group" >
             {staffByCompany.map(staff => {
                 return (
                     <li class="list-group-item">{staff.staffUsername}</li>

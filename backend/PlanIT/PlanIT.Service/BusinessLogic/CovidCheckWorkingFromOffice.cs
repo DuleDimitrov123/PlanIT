@@ -1,34 +1,24 @@
-﻿using PlanIT.Repository.Constants;
-using PlanIT.Repository.Helpers;
-using PlanIT.Service.BusinessObjects;
-using PlanIT.Service.Services.Contracts;
-using System;
-using System.Linq;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace PlanIT.Service.BusinessLogic
 {
     public class CovidCheckWorkingFromOffice : ICheckWorkingFromOffice
     {
-        private readonly double _availablePercentage = 50.0;
+        private readonly double _allowedPercentage = 50.0;
 
-        public bool Check(ITypeOfWorkService typeOfWorkService, ICompanyService companyService, ExtendedTypeOfWorkBO extendedTypeOfWorkBO)
+        public CovidCheckWorkingFromOffice(IConfiguration configuration)
         {
-            var company = companyService.GetCompanyByName(extendedTypeOfWorkBO.CompanyName);
+            _allowedPercentage = double.Parse(configuration["ApplicationConstants:AllowedPercentageInOffice"]);
+        }
 
-            if (company == null)
-            {
-                throw new Exception($"Company {extendedTypeOfWorkBO.CompanyName} doens't exist!");
-            }
+        public bool Check(int alreadyTakenPlaces, int allPlaces)
+        {
+            //+ 1 is because with this new staff, percentage taken can't be more than _allowedPercentage
+            double percentageTaken = 100.0 * (((double)alreadyTakenPlaces + 1.0) / (double)allPlaces);
 
-            var typeOfWork = typeOfWorkService.GetTypeOfWorkByCompanyAndDate(
-                extendedTypeOfWorkBO.CompanyName, extendedTypeOfWorkBO.Date);
-            var typeOfWorkWFO = typeOfWork.Where(t => t.TypeOfWork == TypesOfWorkConstants.WFO).ToList();
-            //+ 1 is because with this new staff, percentage taken can't be more than _availablePercentage
-            double percentageTaken = 100.0 * (((double)typeOfWorkWFO.Count + 1.0) / (double)company.NumberOfWorkplaces);
-
-            //true-available percentage is more then taken => OK
-            //false-available percentage is less then taken => NOT OK
-            return _availablePercentage > percentageTaken;
+            //true-allowed percentage is more then taken => OK
+            //false-allowed percentage is less then taken => NOT OK
+            return _allowedPercentage >= percentageTaken;
         }
     }
 }

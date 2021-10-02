@@ -128,7 +128,14 @@ namespace PlanIT.Service.Services.Implementations
                     throw new NotAvailableMeetingRoomException();
                 }
 
-                if (_allowedNumberInMeetingRoom.IsAllowed(this, reservedMeetingRoom))
+                var meetingRoom = GetMeetingRoomByCompanyAndMeetingRoom(reservedMeetingRoom.CompanyName, reservedMeetingRoom.MeetingRoom);
+
+                if (meetingRoom == null)
+                {
+                    throw new Exception($"Meeting room {reservedMeetingRoom.MeetingRoom} doesn't exist in {reservedMeetingRoom.CompanyName}");
+                }
+
+                if (_allowedNumberInMeetingRoom.IsAllowed(meetingRoom.NumberOfSeats, reservedMeetingRoom))
                 {
                     _reservedMeetingRoomRepository.ReserveMeetingRoom(reservedMeetingRoom);
                 }

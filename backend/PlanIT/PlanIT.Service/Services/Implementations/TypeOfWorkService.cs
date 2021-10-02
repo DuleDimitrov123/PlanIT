@@ -9,6 +9,7 @@ using PlanIT.Service.Helpers;
 using PlanIT.Service.Services.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PlanIT.Service.Services.Implementations
 {
@@ -208,7 +209,8 @@ namespace PlanIT.Service.Services.Implementations
             //check if it is possible to work from office
             if (extendedTypeOfWorkBO.TypeOfWork == TypesOfWorkConstants.WFO)
             {
-                if (!_checkWorkingFromOffice.Check(this, _companyService, extendedTypeOfWorkBO))
+                var peopleInTheOffice = NumberOfPeopleInTheOffice(extendedTypeOfWorkBO);
+                if (!_checkWorkingFromOffice.Check(peopleInTheOffice.AlreadyTakenPlaces, peopleInTheOffice.AllPlaces))
                 {
                     throw new Exception($"Working from office is not possible for date {dateTime.ToShortDateString()}");
                 }
@@ -246,7 +248,8 @@ namespace PlanIT.Service.Services.Implementations
                 {
                     if (typeOfWork == TypesOfWorkConstants.WFO)
                     {
-                        if (!_checkWorkingFromOffice.Check(this, _companyService, extendedTypeOfWorkBO))
+                        var peopleInTheOffice = NumberOfPeopleInTheOffice(extendedTypeOfWorkBO);
+                        if (!_checkWorkingFromOffice.Check(peopleInTheOffice.AlreadyTakenPlaces, peopleInTheOffice.AllPlaces))
                         {
                             throw new CantWFOException();
                         }
@@ -284,6 +287,26 @@ namespace PlanIT.Service.Services.Implementations
                 }
                 throw new Exception(exceptionMessage);
             }
+        }
+
+        private PeopleInTheOffice NumberOfPeopleInTheOffice(ExtendedTypeOfWorkBO extendedTypeOfWorkBO)
+        {
+            var company = _companyService.GetCompanyByName(extendedTypeOfWorkBO.CompanyName);
+
+            if (company == null)
+            {
+                throw new Exception($"Company {extendedTypeOfWorkBO.CompanyName} doesn't exist!");
+            }
+
+            var typeOfWork = GetTypeOfWorkByCompanyAndDate(
+                extendedTypeOfWorkBO.CompanyName, extendedTypeOfWorkBO.Date);
+            var typeOfWorkWFO = typeOfWork.Where(t => t.TypeOfWork == TypesOfWorkConstants.WFO).ToList();
+
+            return new PeopleInTheOffice
+            {
+                AlreadyTakenPlaces = typeOfWorkWFO.Count,
+                AllPlaces = company.NumberOfWorkplaces
+            };
         }
     }
 }

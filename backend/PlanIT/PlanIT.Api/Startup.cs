@@ -51,7 +51,6 @@ namespace PlanIT.Api
             services.AddScoped<ITypeOfWorkByCompanyRepository, TypeOfWorkByCompanyRepository>();
             services.AddScoped<IBreakfastByCompanyRepository, BreakfastByCompanyRepository>();
             services.AddScoped<ITypeOfWorkService, TypeOfWorkService>();
-            //services.AddTransient<ICompanyService, CompanyService>();
 
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             ConfigureAuthentication(services);

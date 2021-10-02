@@ -14,37 +14,39 @@ function Company() {
     if (loading) return <Spinner />
 
     return (
-        <div class="card mb-4">
-            <div>
-                <h2>{company.companyName}</h2>
+        <div className="companyContainer">
+            <div className="card mb-4">
+                <div>
+                    <h2>{company.companyName}</h2>
+                </div>
+                <div class="card-body">
+                    <table class="table user-view-table m-0">
+                        <tbody>
+                            <tr>
+                                <td>Country:</td>
+                                <td>{company.country}</td>
+                            </tr>
+                            <tr>
+                                <td>City:</td>
+                                <td>{company.city}</td>
+                            </tr>
+                            <tr>
+                                <td>Address:</td>
+                                <td>{company.address}</td>
+                            </tr>
+                            <tr>
+                                <td>Description:</td>
+                                <td>{company.description}</td>
+                            </tr>
+                            <tr>
+                                <td>Number of workplaces:</td>
+                                <td>{company.numberOfWorkplaces}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>       
             </div>
-            <div class="card-body">
-                <table class="table user-view-table m-0">
-                    <tbody>
-                        <tr>
-                            <td>Country:</td>
-                            <td>{company.country}</td>
-                        </tr>
-                        <tr>
-                            <td>City:</td>
-                            <td>{company.city}</td>
-                        </tr>
-                        <tr>
-                            <td>Address:</td>
-                            <td>{company.address}</td>
-                        </tr>
-                        <tr>
-                            <td>Description:</td>
-                            <td>{company.description}</td>
-                        </tr>
-                        <tr>
-                            <td>Number of workplaces:</td>
-                            <td>{company.numberOfWorkplaces}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div>
+            <div className="rightCompanyContainer">
                 <h3>Staff:</h3>
                 <StaffByCompany companyName={company.companyName} />
             </div>
