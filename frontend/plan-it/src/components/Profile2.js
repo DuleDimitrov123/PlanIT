@@ -47,7 +47,10 @@ function Profile2({setAmILoggedIn}) {
       return <Error customMessage={"You can't reach this page!"}/>
     }
 
-    localStorage.setItem("companyName", staff.companyName);
+    if (staff.companyName !== null)
+    {
+        localStorage.setItem("companyName", staff.companyName);
+    }
 
     console.log(staff);
 

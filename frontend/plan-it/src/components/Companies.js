@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Spinner from './Spinner'
 import useFetch from '../services/useFetch'
 import * as urlConstants from '../constants/urlConstants'
+import * as generalHelpers from '../services/generalHelpers'
 import '../App.css'
 import { useParams, Link } from "react-router-dom";
 import CreateCompany from './CreateCompany'
@@ -12,6 +13,7 @@ function Companies() {
     const [showSpinner, setShowSpinner] = useState(false);
     let companyName = localStorage.getItem("companyName");
     let userHasCompany = false;
+    const staffCanCreate = generalHelpers.CheckIfLoggerUserCanCreate();
 
     if(companyName != null && companyName != undefined)
     {
@@ -60,8 +62,12 @@ function Companies() {
         <div>
             {showSpinner && <Spinner/>}
             <div className="divForCenterContent">
-                {!userHasCompany && <label>Please choose a company or create new!</label>}
-                <CreateCompany />
+                {!userHasCompany && staffCanCreate &&
+                    <div>
+                        <label>Please choose a company or create new!</label>
+                        <CreateCompany />
+                    </div>
+                }
             </div>
             <div className="companiesDiv">
                 {companies.map(company => {
@@ -76,7 +82,9 @@ function Companies() {
                                     }
                                     <div>
                                         <Link to={`/companies/${company.companyName}`} className="btn btn-primary">See more</Link>
-                                        <button className="btn btn-primary" onClick={() =>handleChoosingCompany(company.companyName)}>Choose company</button>
+                                        {!userHasCompany && 
+                                            <button className="btn btn-primary" onClick={() =>handleChoosingCompany(company.companyName)}>Choose company</button>
+                                        }
                                     </div>
                                 </div>
                             </div>

@@ -54,7 +54,7 @@ namespace PlanIT.Api.Controllers
 
         [HttpPost]
         [Route("companies")]
-        [AllowAnonymous]
+        [Authorize(Policy = "StaffCanCreate")]
         public ActionResult CreateCompany([FromBody] CompanyBO companyBO)
         {
             try

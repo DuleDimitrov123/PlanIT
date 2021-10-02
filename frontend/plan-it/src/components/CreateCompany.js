@@ -6,6 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Spinner from './Spinner.js'
 import { postRequest } from '../services/postRequest.js'
+import {postRequestWithAuthorizationWithoutResponse} from '../services/postRequestWithAuthorizationWithoutResponse.js'
 import * as urlConstants from '../constants/urlConstants'
 
 function CreateCompany() {
@@ -38,7 +39,7 @@ function CreateCompany() {
             description: description,
             numberOfWorkplaces: numberOfWorkplaces
         };
-        postRequest(company, urlConstants.BASE_URL + urlConstants.CREATE_COMPANY);
+        await postRequestWithAuthorizationWithoutResponse(company, urlConstants.BASE_URL + urlConstants.CREATE_COMPANY)
 
         window.location.reload("/companies");
     };
