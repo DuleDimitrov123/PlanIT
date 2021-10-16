@@ -1,0 +1,35 @@
+.typeOfWorkContainerDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+.typeOfWorkLowerDiv {
+  display: flex;
+  flex-direction: row;
+}
+
+.divForCenterContent {
+  display: flex;
+  justify-content: center;
+}
+
+.typeOfWorkLeft {
+  border: 1px solid black;
+  width: 50%;
+  margin-right: 10px;
+}
+
+.typeOfWorkRight {
+  border: 1px solid black;
+  width: 50%;
+}
+
+.WFHWFOTableDiv {
+  display: flex;
+  flex-direction: row;
+}
+
+.startEndDateTypeOfWorkDiv {
+  display: flex;
+  flex-direction: row;
+}
